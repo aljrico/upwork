@@ -1,0 +1,377 @@
+Name,Breed,DOB,Sex,Neuter,CKD?,Cause CKD,Age at diagnosis CKD,Other reason for mesure,Hypertension,Concurrent conditions,Outcome,Last follow-up,followup_time,Date of death,Survival,Date 1,Weight 1,UPCR1,Crea BQ1,Crea HCV1,Urea1,K1,Phos1,TP1,Alb 1,Biochem1,PCV1,CBC1,BP1,USG1,UA1,Clinical signs1,Duration of clinical signs,Diagnostic work-up1,Urine culture1,Ttmt 1,Date 2,Weight 2,UPCR2,Crea BQ2,Crea HCV2,Urea2,K2,Phos2,TP2,Alb 2,Biochem2,PCV2,CBC2,BP2,USG2,UA2,Clinical signs2,Ttmt 2,Date 3,Weight 3,UPCR3,Crea BQ3,Crea HCV3,Urea3,K3,Phos3,TP3,Alb 3,Biochem3,PCV2,CBC2,BP3,USG3,UA3,Clinical signs3,Ttmt3,Other controls
+6339- SAYA,DSH,5/15/08,F,Y,N,,1,,NO  150 mmHg,FIV,"No improvement, likely euthanasia",,3,3/9/09,12,2/25/09,2.2,0.3,5,,75,3.2,5.1,9.5,3.2,GPT 14,25,OK,160,"1,033","PH6, BIL +",weight loss,,"irregular kidney, loss of cortical definition",,"Diet, Benacepril",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+5245- POMPOM,DSH,10/15/99,M,Y,Y,,10,,Y 180 mmHg,gingivitis/periodontitis,Alive,8/28/14,,,1590,3/31/09,5.8,0.014,2.6,,28,5.2,6.3,9,3.3,"ALT 41, FA 35,GLUC 96",47.1,OK,140,1035,OK,NONE,,No renal changes,negative,Diet,9/10/10,5.1,0.03,2.4,,25,4.8,6.1,8,3.7,"GLUC 106,ALT 17, FA 58",45,OK,220,1032,0K,NONE,"Diet, amlodipine",6/28/14,4.8,0.08,3.5,,32,3.5,8.2,7.2,2.9,"GLUC 87,ALT 49,FA 47",37,"EOS 0,92",165,1029,,,"Diet, amlodidine, felimazole","T4: 0,8"
+5468- ISIS,Siamese,3/27/97,F,Y,Y,,12,,NO  135 mmHg,,"No improvement, likely euthanasia",,1035,3/21/12,,5/11/09,4.1,0.03,3,,26,4.7,4.8,7.8,3.2,"GLUC 86, FA 56,",37.7,OK,130,1030,ok,NONE,," irregular kidney, loss of cortical definition",negative,"Diet, Benacepril",6/19/10,3.4,0.02,3.2,,35,4.2,5.8,7.6,3.3,"GLUC 110, ALT 68,FA 56",39.4,OK,175,1025,OK,"vomit, gingivitis","Diet, famotidine,benaceprilo",2/6/12,3.4,0.04,3.8,,41,3.2,9.1,6.2,2.2,"GLUC 107,ALT 40,FA 48",17,"HB 7, RBC 3,47, WBC 16280, N 13160",,1015,,"anorexia, chronic vomiting,weight loss, ","diet, benaceprolo, marbofloxacino,famotidina, omeprazol",
+2226-RUFI,DSH,8/5/95,F,Y,Y,,13,,NO  ,bonquitis crónica,Dead,7/22/09,240,8/5/09,,11/25/08,2.95,0.04,12.9,,111,,10.8,8.4,3.6,,23.2,,220,"1,015",hematuria,"weight loss, ",unknown,"loss of cortical definition, pelvis dilatation",,Benacepril amlodipine,7/22/09,2.75,0.025,7.9,,97,,8.6,5.1,2.2,,20.7,ok,165,"1,022",ok,"hiporexia, wasting, 
+vomits","benacepril, amlodipine",,,,,,,,,,,,,,,,,,,
+4385-BLANQUITO,DSH,2/15/05,M,Y,Y,,5,,Y 170 mmHg,"hipertiroidismo, gingivitis/periodontitis",Alive and controlled,12/29/14,1828,,,1/30/10,6.6,0,1.9,,24,,,7.2,3.3,"GLU 134, FA 49, GPT 55",34.2,OK,120,"1,040",OK,NONE,,No renal changes,,Diet,6/12/13,6.9,,1.9,,18,,,7.8,3.5,"GLU 118,ALT 24, FA 70",41.1,OK,170,"1,035",OK,Vomits,Diet,12/29/14,6.6,0.017,1.8,,19,,,9,3.1,"GLUC 148, ALT51, FA 62",28.3,,,"1,048",,,"Diet, Ht control",
+7565-LUZ,DSH,6/15/10,F,Y,N,,4,,,,Alive and controlled,1/9/15,61,,,12/5/14,4.2,,2.2,,27,,,8,3.7,"GLU 233, GPT 53, FA 48",37.4,OK,,,,Polydipsia,unknown,pelvis dilatation ,,,1/9/15,4.2,0.02,1.8,,20,,,8,3.2,"GLU 218, ALT 57, FA 60",39.8,OK,,"1,045",pH 9,NONE,Marbofloxacine,,,,,,,,,,,,,,,,,,,
+5245-POMPOM,norwegian forest cat,10/15/99,M,Y,Y,,10,,Y 170 mmHg,hipertiroidismo ,Alive and controlled,8/26/14,2155,,,3/31/09,4.5,0.014,2.6,,37,4.6,5.5,7.5,3.2,,34,ok,140,"1,037",ok,"Weight loss, dehydration and poor coat",unknown,loss of cortical definition,,diet,2/11/09,4.3,0.03,2.4,,35,3.9,4.7,7.2,3.8,,32.5,OK,220,"1,032",,NONE,"Wet diet, amlodipine",9/10/10,4.2,0.03,2,,,,,7.2,3.3,,,,,"1,032",,,"Wet diet, amlodipine","13/04/13 T4 4,95yg/dl// UPC 0,0124// PA168// tmt:Wet diet, amlodipine+metimazole
+28/06/14 T4 0,80yg/dl// UPC 0,08// DU:1.029// Crea 3,5// PAS 165mmHg// tmt: Wet diet, amlodipine+metimazole"
+5281-OLIVIA,DSH,5/18/00,F,Y,Y,,13,,NO ,Diabetes,Alive ,2/7/15,547,,,9/28/13,3.6,,2.2,,,,,,,,37,OK,125,,,"Polydipsia, polyuria",unknown,,,diet,3/10/14,3.2,,3.3,,47,,,6.8,3.2,"fructosamine: 681,2mmol/l",,,,"1,014",glucosuria,polyuria,"insuline, wet renal diet",2/7/15,4,0.017,3.3,,47,,, ,,,29.7,"WBC:3,89K/YL",,"1,017",,"heart murmur, ","Wet renal diet, famotidine, mirtazapine",
+8733-PARDITA,Siamese,4/1/98,F,Y,N,,17,hyperthyroidism,Y 175 mmHg,hipertiroidismo,Alive and controlled,2/5/15,35,,,1/5/15,2.2,0.04,1.2,,62,,,7.2,3,"FA: 147, t4:7,7yg/dl",47.5,Neutrophilia,160,"1,033","bacteriuria, bilirrubinuria","weight loss, excitement, and poor coat",2 years," irregular kidney, loss of cortical definition",,,2/5/15,2.75,,1.2,,48,4.1,4,7.5,3,ALT: 137,34.7,OK,160,,,NONE,"metimazole, metilprednisolone, pradofloxacine",,,,,,,,,,,,,,,,,,,
+8347-TILIN,DSH,5/20/05,F,Y,Y,,9,,NO,neoplasia intestinal ,Alive ,2/13/15,49,,,12/27/14,3.27,1.76,1.3,,17,,,9.8,3.9,"GLU: 177, ALT 47, FA:46",46.40%,OK,,"1,043",,weight loss,unknown,pelvis dilatation,negative," amlodipine,  benacepril
+",1/30/15,3.47,2.08,,,,,,,,,,,,"1,035",ok,none,"marbofloxacine, metilprednisolone, clorambucil, amlodipine, subcutaneous hidratation, oral potasium, benacepril",2/13/15,3.43,1.28,1.2,,18,3.9,3.3,8.2,3.4,"GLUC 148, 
+ALT>130, 
+ALKP 33",42.50%,ok,,"1,043",,none,"marbofloxacine, metilprednisolone, 
+clorambucil, amlodipine, 
+subcutaneous hidratation, 
+oral potasium, benacepril, buprex",
+8368-PEGASO,DSH,5/21/05,M,Y,Y,,9,,Y 180 mmHg,"FIV, gingivitis/periodontitis",No improvement,2/3/15,60,,,12/10/14,6,0.028,4.1,,64,3.9,7.7,9.2,,,16.3,,,,,"dehydration, anorexia, vomits",1 day,,, diet,12/17/14,6,,4,,52,,,,3.1,,27.6,Leukopenia,,,,,"marbofloxacine, wet, renal diet",1/7/15,,0.051,3.5,,46,,,,3.3,"GLUC 114, 
+ALT 65, FA 59",24%,"RBC 4,74m/yl
+WBC 4,71k/yl, NEU:2,22k/yl",,,,,"Wet diet, marbofloxacine","03/02/2015: Crea 3,3, Phos 5,6, Hct 30,5%, WBC: 4,82yg/dl, TP: 9,4 tmt: famotidine, marbofloxacine, Renal diet"
+3907-GRISSI,DSH,4/1/03,M,Y,Y,,9,,NO,"FIV, hipertiroidismo",Alive and controlled,10/18/14,780,,,9/29/12,5.2,0.014,2.4,,23,,,7.6,3.2,,42.2,Lymphopenia,,"1,035",leucosuria,none,,No renal changes,, diet,3/23/12,5.09,,1.6,,28,,,7.2,3.2,"T4: 4,22yg/dl",24.4,Leukopenia,,,,none,"wet diet, metimazole, feline interferón",7/23/14,5.2,,3.1,,,,,8,3.3,"T4 0,41yg/dl",36.6,"Leucopenia, lymphopenia",,,,,"Wet diet, metimazole, feline interferon","18/10/2014: BW:5,17// BP: 130// Crea 2,3// Hct: 35%// PT:8,4// T4:1,4// 
+Tmt: wet diet, metimazole, feline interferon"
+6568-TRICOL,DSH,6/1/09,M,N,N,,4 months,,NO,,Dead,9/18/09,,9/18/09,4,9/14/09,1.2,2.31,1.4,,53,,,8.2,2.4,,19,"Leucocitosis, 
+neutrophilia",,"1,013",,"Polydipsia, polyuria, periuria",4 day,pelvis dilatation,,benacepril,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8406-SMARTY,DSH,6/1/13,F,Y,N,,1,,NO,,Alive,3/21/14,,,,1/14/14,3.2,0.25,1.9,,,,,,,,,,,,,,,,,,2/14/14,,,1.6,,28,,,,,,,,,,,,,3/21/14,,"<0,4",,,,,,,,,,,,,,,,
+8397-HEIDI,DSH,4/1/02,F,Y,N,,12,,NO,,Alive,4/11/16,,,,5/7/14,5,0.04,0,,,,,,,"T4:2,34",,,,,"DU: 1.025, pH6, Proteinuria, Bilirrubinuria",,,,,,11/014/16,3.6,0.21,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+6981-BONITA,DSH,12/25/03,F,Y,N,,2,,NO,,Alive,6/15/18,,,,12/17/15,7.4,0.36,1.6,,29,,5.2,,3.3,Glu:535,,,,,,,,,,,4/25/14,8,0.36,2.1,,29,4.3,,,3.6,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9125-JAS,DSH,1/15/01,M,Y,Y,,15,,NO,,Alive,1/5/16,,,,1/5/16,3.58,0.68,3.1,,70,,6.9,,2.6,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+7491-PAPAYA,DSH,9/15/07,F,N,Y,,9,,NO,,Alive,1/12/16,,,,1/12/16,4.18,0.02,2.6,,33,,,,2.7,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+6864-ARUA,DSH,8/15/09,F,Y,Y,,7,,NO,,Alive,3/16/18,,,,1/29/16,4.23,0.16,1.8,,19,,3.8,,3.3,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+3422-OFELIA,DSH,9/15/00,F,Y,Y,,16,,y 182 mmHg,,Alive,4/6/18,,,,2/9/16,3.6,0.06,3.4,,38,,4.9,,3.1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9293-ZAR,Siamese,8/1/03,M,Y,Y,,13,,NO,,Alive,4/11/17,,,,4/11/17,3.7,0.11,4,,61,,,,3.2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9622-KOKOA,DSH,3/25/16,M,Y,N,,1,,NO,,Alive,4/15/17,,,,4/15/17,6.2,"<0,1",1.4,,19,,,7.4,3.7,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9173-CANELA,DSH,3/1/02,F,Y,N,,14,,NO,,Alive,4/28/17,,,,2/29/16,2.7,0.52,1.3,,20,,4,,2.7,,,,,,,,,,,,12/7/16,2.94,6.38,,,>130,,>16,9.6,0.5,"glob:6,6",,,,,,,,,,,,,,,,,,,,,,,,,,
+8510-SETI,bosque siberia,4/15/12,M,y,N,,2,,NO,,Alive,10/13/16,,,,3/7/16,4.3,0.04,,,,,,,,,,,,,,,,,,,10/13/16,3.85,0.06,2.1,,28,,3.8,,3.4,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8220-SALSA,DSH,9/15/02,F,Y,N,,13,,Y 170 mmHg,,Alive,10/18/16,,,,7/19/13,,0.029,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+6961-MAX,DSH,10/15/09,M,Y,Y,,9,,NO,,Alive,6/6/18,,,,6/6/18,5.1,0.36,">13,6",,>130,,13.2,9.2,3.9,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+6834-NICEA,DSH,4/1/07,F,Y,Y,,11,,NO,,Alive,6/13/18,,,,6/13/18,4.5,0.16,2.5,,40,,4.6,10.1,3.5,SDMA:24,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9158-BUBI,DSH,5/15/04,F,Y,Y,,13,,NO,,Alive,4/6/17,,,,4/4/17,,0.26,12,,>130,5.2,">16,1",7.6,3,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9209-MICHI,DSH,4/5/01,F,Y,N,,15,,NO,,Alive,4/7/16,,,,4/7/16,3.17,0.26,1.6,,31,3.7,3.6,,3.7,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+10176-GRETA,DSH,6/15/14,F,Y,Y,,4,,NO,,Alive,9/5/18,,,,9/5/18,4.6,0.26,1.85,,26,3,5.4,8.9,3,"SDMA:12 GLU:170 GLOB:5,9",,,145,1050,,"VOMITING, HIPOREXIA, WEIGHTLOSS",unknown,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+10096- PITUFO,Siamese,5/10/18,M,Y,Y,,10,,NO,Patología digestiva,Alive,9/5/18,,,,7/10/18,6.9,0.53,2.7,,42,,6,10.1,3.9,"GLOB: 6,2",,ERYTHROCYTOSIS,,1020,,"VOMITING, HIPOREXIA, WEIGHTLOSS",1 Week,"irregular kidney, loss of cortical definition",,telmisartan,7/28/17,7.1,0.12,3.5,,,,3.7,8.4,,SDMA:12,,,,,,"Changes water intake, eat less.","telmisartan, maropitant, mirtazapina",,,,,,,,,,,,,,,,,,,
+9221-MORGANA,DSH,6/5/14,F,Y,N,,,,NO,,Alive,4/29/17,,,,4/29/17,3.12,0.03,,,,,,,,,,,,1033,,hematuria,2 days,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9614-ALMIRANTE,DSH,3/1/04,M,Y,Y,,13,,NO,"Patología digestiva, bronquitis crónica",Alive,5/9/17,,,,5/9/17,,0.06,1.6,,,,4.4,8.1,3.2,"GLOB: 4,9",,,,1042,,,," Kidney enlarged, thickening of the cortex, kidney atrophied",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+7856- LAKSHMI,Sacred of Burma,4/12/12,F,Y,Y,,5,,NO,,Alive,8/8/18,,,,6/9/17,,0.1,13.5,,,6.5,12,9.2,3.4,"GLOB: 5,8",,,,1018,,VOMITING,2 DAYS,"irregular kidney, loss of cortical definition",,,6/18/17,3.5,,2.5,,,2.5,6.4,7.4,2.9,"HC0318,9;PC02 40,0;Tc02 20,1",,,,,,"vomiting, hyporexia","Fluidtherapy, potassium supplement, cerenia, buprenorfina, dexametasona",7/28/17,,,2.9,,,,3.9,,,,,,,,,,,
+9739-RAMON,DSH,4/15/07,M,Y,Y,,10,,NO,gingivitis/periodontitis,Alive,6/30/18,,,,8/3/17,,0.51,2.6,,,,,8.2,3.5,"GLOB:4,7",,,,1040,,VOMITING,1 WEEK,"irregular kidney, loss of cortical definition",,,6/29/18,6.5,,3.4,,,,3.4,,,fPLI positive,,,,,,hyporexia,"Bupremorfina, maropitant, dexametasona",,,,,,,,,,,,,,,,,,,
+8993-KYRA,PERSIAN,7/27/14,F,Y,Y,,3,,Y 183 mmHg,,Alive,9/9/17,,,,8/1/17,2.71,1.36,3,,,4.6,7,,,FRUC:207,,,,1020,,"vomiting, decayed, discouraging, hyporexia",5 dias,"pelvis dilatation, ureter dilatation",escherichia coli,"diet, benacepril",9/1/17,2880,0.22,3.1,,,,5.9,7.5,3,"GLOB:4,6",,,,,,,,,,,,,,,,,,,,,,,,,,
+9681-ARIEL,DSH,1/10/06,M,Y,Y,,10,,NO,Patología digestiva,Alive,6/21/18,,,,9/2/17,4.25,0.05,1.5,,,,5.2,8.8,3.1,,,,,1030,,,,No renal changes,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9773-TARZAN,DSH,23-Jan,M,Y,N,,,,NO,,Alive,9/9/17,,,,9/5/17,6.89,0.09,2.4,,,4.5,5.2,8.5,3.3,"FRUC:242,TT4 2.1, fPLI positive",,LYMPHOCYTOSIS,,1015,,"VOMITING, DRINKING MORE WATER",1 WEEK,No renal changes,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9174-PANCHO,DSH,3/5/11,M,Y,Y,,5,,NO,,Alive,9/9/17,,,,2/20/17,,2.94,2.1,,,,5,9.2,7,,,ANEMIA,,,,"VOMITING, ANOREXIA",, loss of cortical definition,,,9/9/17,,3.15,4.6,,,,,12,2.5,"GLOB: 9,5",,"ANEMIA, LEUKOPENIA",,,,"EAT LESS, APATHETIC","Fuidtherapy, benaceprilo, maropitant",,,,,,,,,,,,,,,,,,,
+9833-REMO,DSH,2/1/14,M,Y,Y,URETERAL LITIASIS,3,,NO,,Alive,7/19/18,,,,10/30/17,,0.04,3.2,,,,4,6.7,2.8,"GLOB: 3,9",,ANEMIA LEUCOPENIA,,1025,,VOMITING,2 WEEKS,renal lithiasis,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+6831-MEAD,Siamese,1/9/07,M,Y,Y,,10,,NO,,Alive,,,,,12/26/17,4.31,0.45,2.6,,,,,9,,"GLOB: 6,1",FPLI POSITIVE,,,1020,HEMATURIA,WEIGHT LOSS,MONTHS,pelvis dilatation,E. COLI,benacepril,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9236-LUNA,DSH,5/15/02,F,Y,Y,,,,NO,,Alive,,,,,1/23/18,2.7,0.12,2.3,,,,5.3,6.8,2.9,"GLOB: 3,9",,,,1020,,Excessive vocalization,,"irregular kidney, loss of cortical definition",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8027- DRAKO,Russian blue,4/1/09,M,Y,N,,,,NO,,Alive,3/12/18,,,,3/12/18,7.16,0.07,2,,,,3.3,7.4,3,"GLOB:4,4",,,,1050,HEMATURIA,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9007-LULA,DHS,9/24/04,F,Y,Y,,12,,NO,Patología digestiva,Alive,4/30/18,,,,3/13/18,2.84,0.04,0.8,,,4.1,9.2,8,3.1,"GLOB: 4,8",,,155,1023,leucosuria,"VOMITING, ANOREXIA, EXCESSIVE VOCALIZATION",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9989-CLARA,Siamese,11/14/04,F,Y,Y,,14,,NO,,Alive,4/13/18,,,,4/13/18,,0.29,3.8,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8728-HUEVON,DHS,4/19/03,M,Y,Y,,7,,Y 190 mmHg,,Alive,6/4/18,,,,6/4/18,4.67,0.18,2.1,,,,,8.7,3.1,"GLOB: 5,6 tt4: 2,0",,,,,,VOMITING,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8287-BENJI,DHS,4/12/10,M,Y,Y,,8,,NO,,Alive,6/29/18,,,,6/29/18,2.82,0.96,3.3,,,,10,8.7,3.1,"GLOB: 5,7",,,,1015,,,," irregular kidney, loss of cortical definition",,diet ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+7505-RUFO,DHS,8/16/11,M,Y,Y,,1,,NO,,Alive,8/23/18,,,,12/2/18,4.38,0.1,2.4,,,,4.8,7.1,3,"GLOB:4,1",,,,1050,,,,"pelvis dilatation, loss of corticomedular definition",,diet ,6/15/18,4.1,0.06,2.3,,,,3.4,7.2,3.3,GLOB: 4,,"LEUKOPENIA, NEUTROPENIA",,1037,,,,,,,,,,,,,,,,,,,,,,
+10081-BOB,DHS,5/15/16,M,Y,Y,,2,,Y 175 mmHg,,Alive,8/6/18,,,,6/28/18,,0.99,3.8,,,,8.4,7.8,2.7,"GLOB: 5,1",,ANEMIA,,1022,LEUCOSURIA,,," loss of cortical definition, pelvis dilatation",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8930-LUNIS,DSH,6/1/04,F,N,Y,,11,,NO,FIV,Dead,6/25/15,,,,6/25/15,1.9,11.25,2.9,,,,4.5,,2.2,,,"ANEMIA, NEUTROPHILIA",,,,,,No renal changes,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8974-MINA,DHS,5/15/02,F,Y,Y,,10,,NO,,dead,8/19/15,,9/20/15,,8/18/15,1.5,1.18,7.7,,,,16.1,,,,,ANEMIA LEUCOPENIA,,1010,,SHOCK,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9975-PETER,DSH,6/15/14,M,Y,Y,,4,,NO,,Alive,8/8/18,,,,8/2/18,5.6,0.17,2.4,,57,,5.3,8.5,3.4,"glob:5,2",,, ,,"DU: 1025 PH:5,5 LEU:POS BLOOD:POS",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+6068-TRITON,DSH,7/15/08,M,Y,Y,,8,,NO,,Alive,2/17/16,,,,2/17/16,7.12,0.04,,,22,,4.3,7,2.9,,,,,,DU: 1025  LEU:POS BLOOD:POS,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9220-MAGUI,DSH,2/20/01,F,Y,Y,,15,,NO,,Alive,4/25/16,,,,4/25/16,2.12,3.43,4.9,,93,,16.1,,,Glu: 182,,,,,DU: 1015 LEU: POSI BILIRRU: POSI SANGRE: POS,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9226-LUISILLO,Siamese,5/3/08,M,Y,Y,,8,,NO,,Alive,5/14/16,,,,5/4/16,3.8,0.33,7.7,,121,4.1,14,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8858-LOBA,DSH,5/1/12,F,Y,Y,,4,,NO,,Alive,11/30/16,,,,9/26/16,3.02,0.33,2.4,,27,,3.7,9,2.9,,,,,,DU: 1030 BIL: POS SANGRE: POS PROT: POS,,,,,,11/30/16,,2.38,>10,,130,,>16,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9275-NERÓN,DSH,1/5/08,M,Y,Y,,8,,NO,,Alive,7/3/18,,,,6/25/16,6.7,0.14,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+5815-NOA,DSH,2/1/08,F,Y,Y,,8,,NO,,Alive,5/5/18,,,,8/9/16,3.95,0.36,2.2,,18,,3.3,,,,,,,,DU:1012,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+5648-SUAVE,DSH,1/23/08,M,Y,Y,,8,,NO,,Alive,10/6/16,,,,9/15/16,5.4,0.61,3,,51,,,,,,,,,,DU: 1020,,,,,,10/5/16,,2.34,3.1,,47,,,,,,,,,,PROT: POS,,,,,,,,,,,,,,,,,,,,,
+8509-ORIÓN,Siamese,4/1/04,M,Y,Y,,13,,Y 182  mmHg,,Alive,4/17/17,,,,3/6/17,,0.11,1.9,,42,,,8.9,3.3,Glu:173,,,,,DU: 1040,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9388-LUNI,DSH,1/1/08,F,Y,Y,,8,,NO,,Alive,,,,,10/29/16,3.78,0.05,1.5,,20,,,,3.4,,,,,,"DU:1050 LEUCOSURIA, BILIRRUBINA",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+7211- TYRA,DSH,7/30/10,F,Y,Y,,4,,NO,,Alive,12/29/17,,,,10/16/14,,0.85,2.8,,,,,7.8,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9036-JOGUIE,DSH,6/15/09,M,Y,Y,,6,,NO,,Alive,12/23/16,,,,12/18/15,4.46,1.72,2.4,,41,3.7,5.2,,2.8,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9546-RON,DSH,3/1/07,M,Y,Y,,10,,NO,,Alive,4/11/17,,,,1/13/17,6.8,0.69,1.6,,46,,3,,,"alkp:122 Glucosa: 540 fructosamina:926,6",,,,,DU:1035,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9599-ROMEO,Russian blue,6/16/13,M,Y,Y,,4,,NO,,Alive,4/8/17,,,,3/15/17,4.5,0.05,2.4,,38,,,7.9,3.5,,,,,,DU:1040,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9515-PIPO,DSH,12/1/09,M,Y,Y,,8,,NO,,Alive,4/5/17,,,,3/24/17,4.5,0.51,2.4,,52,,6.4,7.8,3,SDMA: 14,,,,,DU: 1028,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8731-RICO,DSH,1/1/11,M,Y,Y,,4,,NO,,Alive,1/28/16,,,,1/8/15,7.5,"<0,1",1.8,,24,,,,3.4,,,LIGERA LEUCOPENIA,,1060,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8987-PACHI,DHS,8/1/05,M,Y,Y,,7,,NO,,ALIVE,9/5/15,,,,8/25/15,6.6,0.6,2.2,,,,4,,,,,,,1028,,urinate on vertical surfaces,,renal lithiasis,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8969-PERLITA,DHS,2/15/98,F,Y,Y,,17,,NO,,ALIVE,8/17/15,,,,8/17/15,,0.38,9.8,,,,16.1,9.7,,"T4: 3,75",,"LYMPHOPENIA, ANEMIA",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9032-CROQUETA,EXOTIC,10/13/09,F,Y,Y,,6,,NO,,ALIVE,10/17/15,,,,10/17/15,2.33,0.08,4.5,,,,12.3,,,,,ANEMIA,,,,VOMITING,,pkd,,diet,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9045-OTTY,DHS,6/15/06,M,Y,N,,7,,NO,,ALIVE,11/23/15,,,,11/24/15,,0.01,2.3,,67,,,,,,,ANEMIA,,1045,,"ANOREXIA, DECAYED",,,,diet,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+9076-ASLAN,DHS,6/15/07,M,Y,Y,,8,,NO,FIV,ALIVE,11/20/15,,,,11/19/15,,2.38,3.1,,,,6,,,glu: 383,,GLUCOSURIA HEMATURIA,,1018,,"POLYURIA, POLYDIPSIA",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8090-SUSI,DHS,7/1/09,H,Y,Y,,7,,NO,,ALIVE,11/25/15,,,,11/24/15,2.3,1.94,8.5,,100,,13,,,,,ANEMIA,HEMATURIA,1012,,,,"renal lithiasis,  loss of cortical definition",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+5522-YIBO,DHS,2/15/17,M,Y,N,,7,,NO,,ALIVE,6/5/17,,,,12/7/15,,0.02,2,,,,,,,,,,,1037,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+6000-SELVA,DHS,3/30/08,H,Y,Y,,7,,Y 185 mmHg,,ALIVE,2/23/15,,,,1/25/15,,0.08,3.4,,91,,,7.1,6,GLU:274,,,,1011,,VOMITING,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8777-RAYO,DHS,2/15/05,M,Y,Y,,7,,y 179 mmHg,,ALIVE,,,,,2/23/15,,0.62,13.6,,130,,12.8,,,,,ANEMIA,,1015,,ANOREXIA,, loss of cortical definition,,benacepril,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+4245-BRANDY,DHS,4/15/05,M,Y,N,,7,,NO,,ALIVE,10/5/18,,,,3/30/15,,0.5,2,,30,,,,3.4,"TT4:2,10",,EOSINOFILIA,,1047,,,,No renal changes,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8702-BLACKY,DHS,1/15/05,M,Y,N,,7,,NO,FIV,ALIVE,4/1/15,,,,4/1/15,,0.07,,,,,,,,,,,,1021,,,,pelvis dilatation,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8834-MALENI,DHS,1/15/12,H,Y,Y,,3,,NO,,ALIVE,4/22/15,,,,3/22/15,,0.13,2.4,,,,,,,"TT4:1,35",,,,1040,,,,pelvis dilatation,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8860-MOSACO,DHS,5/1/05,M,Y,Y,,10,,NO,,ALIVE,7/27/15,,,,5/19/15,,0.08,4.2,,62,,6.9,,3.2,,,,,1015,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+6720-LOLA,DHS,4/1/09,H,Y,N,,10,,NO,,ALIVE,11/8/16,,,,,,0.08,1.5,,27,,,,,,,,,,,VOMITING,,loss of cortical definition,,diet,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+8886-CHOLE,DHS,5/1/99,H,Y,Y,,16,,Y 180mmHg,,Dead,11/6/15,,,,6/5/15,3.44,0.4,8.5,,116,,12.5,,,,,,,1015,,,,"renal lithiasis, kidney atrophied",,benacepril,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+10208-YOYO,DHS,5/1/17,M,Y,Y,LYMPHOMA,1,,NO,,ALIVE,10/8/18,,,,9/28/18,4.6,1.3,4.2,,82,,11.6,,,SDMA: 100,,,,1015,,"ANOREXIA, DECAYED",,kidney enlarged,,benacepril,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+P33734 - FEIA,DSH,3/1/04,M,Y,Y,,3,,,FIV,Asymptomatic at last follow-up,7/8/10,1022,,,9/20/07,6.5,0.15,1.9,,73.4,4.2,3.16,8.02,,"Chol 312.5
+Gluc 141.2
+GGT 1
+ALT 73
+Ca 10.7",38,"WBC 4760
+otherwise ok",,1035,,Crisis d'astma?,Asimptomàtic,,,Diet,12/11/08,,,1.82,,66.2,3.99,4.25,7.69,,"Chol 325.3
+Gluc 99.1
+GGT 1
+ALT 104
+Ca 10.4",39,"WBC 3140
+L 1193
+N 1444
+Plt 200",,,,Asimptomàtic,,7/8/10,,,2.36,,69.2,4.18,3.44,7.88,,"Chol 286.4
+Ca 11.1",,,,,,None,Continue diet,
+P7297 - FRI,Persian,7/1/96,M,Y,Y,PKD,12,,,,"Intermitent vomiting, suspected concomitant triaditis",2/24/09,321,,,4/9/08,7.3,0.5,2.56,,118.8,4.59,4.05,7.28,4.17,"Chol 230.7
+Gluc 135.6
+bil 0.17
+FA 30.25
+GGT 1
+ALT 36
+CK 216.1
+Ca 10.7
+Na 158.6
+Cl 123.1",35,"WBC 3980
+L 438",,1028,"pH 5, prot +2, ok",Chronic vomiting,1y,"PKD, hydronephrosis ",Negative,"Diet, benacepril",2/3/09,6.2,1.3,2.17,,93.8,3.81,3.91,7.9,3.11,"Chol 219.8
+Ca 9.4",22,"RBC 4.29
+L 129
+retic 13728",,,,"Acute vomiting (3d)
+AUS: suspected mild triaditis","Buprex
+Ampicilina
+Primperan
+Flagyl",2/24/09,6,,,,,,,,,,,,,,,"Better, intermitent vomiting",,
+P14159 - GORDI,DLH,1/1/96,M,Y,N,,,"Chronic vomiting, acute lethargy",,neoplasia intestinal ,,9/19/08,,,,5/28/08,4.3,0.2,1.7,,64.8,4.14,4.38,6.96,,,,,,1045,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+P8737 - BONO,DSH,1/1/98,M,Y,N,,,Slight weight loss,,"gingivitis/periodontitis, FIV ",Still alive. No development of CKD. Development of hyperthyroidism 11/6/13.,Alive,,,,5/31/07,,0.23,1.83,,65.4,3.72,4.73,8.05,3.08,ok,,,,1050,"pH 7, prot +2, sang +3",Slight weight loss,,,Negative,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+P38321 - PINCHA,DSH,2/1/93,F,N,Y,,15,,,gingivitis/periodontitis,Development of pyometra 13/10/10 and agudization of renal failure. Creatinine 9.5. Improvement with medical treatment and lost to follow-up.,10/21/10,766,,,9/15/08,3.2,0.3,2.76,,84,4.04,1.81,7.1,2.82,"Chol 172.6
+Gluc 128.4
+bil 0.16
+FA 41.58
+GGT 1
+ALT 47
+CK 237
+Ca 11
+Na 153.8
+Cl 119.9",35,ok,120,1030,"pH 6, prot +1, gluc +1",Detected on bloods for gingivitis,,,"Staph coagulasa +, E. coli",diet,11/4/08,3.5,,2.92,,76.8,3.61,2.77,6.21,2.89,"Chol 136.2
+Gluc 144.8
+GGT 1
+ALT 52
+Ca 10.4
+bil 0.15
+FA 31.3
+CK 242.1
+Na 148.9
+Cl 117.7",,,,,,,,2/25/09,3.5,,2.93,,77.3,3.66,2.86,6.4,3.41,"Chol 152.3
+Ca 10.2",30,ok,115,,,Asimptomàtic,Dieta,
+P33688 - NINA,DSH,4/1/04,F,Y,Y,,4.5,,,,,4/22/12,1262,,,11/7/08,2.9,0.5,,,49,2.3,,7.1,,"ALT 30
+AST 76
+Glu 229
+Na 158",43,ok,,,,"Weight loss, lethargy 1d.",,"renal lithiasis, irregular kidney",Negative,benacepril,11/18/08,,,1.94,,101,3.58,1.96,6.73,3.72,"Chol 195.3
+Ca 3.58",,,,,,Asimptomàtic,Igual,12/4/08,,1,1.65,,122.9,3.59,1.98,6.64,,"Chol 122.9
+Ca 11.4",,,,,,Asimptomàtic. AUS: same.,Igual,"6/2/9: Crea 2.16, urea 112.7, UPCR 4.89, Phos 3.12, Ca 11.3, K 5.73, AUS: further degeneration RK. Cinically stable.
+27/5/09: Crea 2.71, urea 104.6, Phos 3.11, Ca 11.1, K 5.46. Cinically stable.
+8/9/09: Crea 2.71, urea 99.5, Phos 2.61, Ca 11.0, K 4.47.  Cinically stable.
+10/3/12: weight loss, lethargy (agudization of CKD). BP 115. PCV 29.7%. Crea 9.2, urea 104, Phos 5.1, Ca 10 at admission. Crea 4.2, urea 39 at discharge (15/3/12). Lab HCV.
+19/4/13: reagudization of CKD. Crea 7.3, urea 82, K 1.9, phos 7.1 at admission. Crea 3.7, PCV 26% at discharge (22/4/13)."
+P34019 - TRINI,DSH,1/1/00,F,Y,Y,,9,Mild azotemia on pre-OHE bloods,,,Deterioration of CKD and PTS,,,10/27/10,628,2/6/09,,0.3,1.6,,81.1,2.48,2.02,6.87,,"Chol 355.9
+Gluc 108.8
+GGT 1
+ALT 48
+Ca 10.4",32,L 437,,1040,"pH 5, prot +1, sang+2",None,,,,,10/25/10,2.9,,17.6,,796,6.91,13.01,6.79,,"Chol 260
+Ca 9.7",31.5,"WBC 4.66
+L 230",140,,,"Poor condition, mental depression","Fluids, ranitidine, buprex",,,,,,,,,,,,,,,,,,,
+P32154 - BUFI,Persian,3/16/96,M,N,Y,,13,,,gingivitis/periodontitis,,2/23/09,1,,,2/23/09,2.5,0.53,6.25,,195.2,2.81,14.15,8.62,2.88,"Chol 170
+gluc 156.2
+bil 0.16
+FA 21.86
+GGT 1
+CK 309.1
+ALT 58
+Ca 9.4
+Na 150.2
+Cl 118.8",17,"RBC 3.96
+N 13094
+retic 24948",,1015,pH 5,PU-PD,Months,PKD,Negative,"Diet, benacepril",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+P39484 - KALI,DSH,1/1/02,F,Y,N,,,Weight loss,,"gingivitis/periodontitis, Neoplasia intestinal","No improvement, likely euthanasia.",3/10/09,27,,,2/11/09,3,0.19,1.69,,46,5,4.6,8.1,2.8,"bil 0.15
+Ca 9.27
+Cl 116
+Chol 71
+FA 137
+ALT 39
+Gluc 289",40.6,ok,,1048,"pH 7, prot +",Weight loss,3 weeks,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+P34465 - FLIC,DSH,4/1/95,M,N,Y,,12,,,FIV,,6/29/09,797,,,4/24/07,9.5,,1.95,,75.7,3.44,3.13,8.74,,"Chol 219.7
+Gluc 191
+GGT 1
+ALT 38
+Ca 10.4",38,ok,,1010,"pH 6, prot +, sang +4",,Episode of vomiting and hematoquezia. Slight decrease in apetitie.,,,Diet,6/29/09,6,0.1,,2.8,29,,3.39,6,,"FA 23.75
+gluc 136
+ALT 25
+Ca 9.2",39,ok,130,,,,Fluids. Discharge 30/6/09.,,,,,,,,,,,,,,,,,,,
+P40248 - MIU,DSH,1/1/02,F,Y,Y,,7,,,,"No improvement, likely euthanasia.",8/4/09,26,,,7/9/09,3.3,0.3,4.04,,264,3.84,,8.84,3.61,"Chol 242
+Gluc 200.2
+FA 21.39
+GGT 1
+ALT 82
+Na 143.2
+Cl 83.2",45,"WBC 18380
+M 2389
+N 13050",,1020,"pH 7, prto +2, sang +3, cilindres granulosos",Vomiting,2-3 months," loss of cortical definition
+",,,7/28/09,,0.2,4.1,,74,2.5,"9,48",7.35,,,30,ok,80,,,,Fluids. Discharged 30/7/09 at 2.66 creatinine.,,,,,,,,,,,,,,,,,,,
+P40991 - MAX SEJMET,Sphynx,9/11/05,M,N,N,,,Suspita urticària pigmentosa??? PU-PD,,,,9/29/09,39,,,8/21/09,,0.4,1.1,,51.8,3.55,4.02,7.86,,"Chol 114.4
+Gluc 70.2
+GGT 1
+ALT 66
+Ca 9.9",38,ok,,1045,"pH 7, prot +",Suspita urticària pigmentosa??? PU-PD,,,Negative,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+P49360 - LUCAS,Persian,7/10/06,M,N,Y,,6,,,,"No improvement, died at home",,,10/7/12,4,10/3/12,2.4,1.7,4.58,,249.8,3.09,7.88,,,,,,,1009,"pH 6 prot +, sang +4","Hyporexia, PU-PD.",Few days," loss of cortical definition, bladder lithiasis",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+P7986 - MEU,DSH,10/1/04,F,N,Y,,8,,,,"No improvement, PTS.",,,5/3/12,1,5/2/12,2.9,2.23,,,275,2.7,28.8,10.3,3.6,"bil 0.9
+gluc 281
+ca 10.0
+ALT 74
+FA 48
+Chol 195",39,,170,1019,"pH 6, prot +3, sang +3","Occasional vomiting, weird behaviour",Few days, loss of cortical definition,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+P34849 - AGATA,DSH,1/1/05,F,N,?,,2?,Azotemia (acute? prerenal?) + cholangitis +/- pancreatitis,,,PTS,,,6/15/07,2,6/13/07,,2.2,4.05,,179.5,4.15,9.43,4.97,1.88,"Chol 131.6
+Gluc 282.5
+GGT 1
+ALT 131
+Ca 7.4",28,"WBC 1780
+L 1264
+M 89
+N 374
+Plt 154",,,,"Lethargy, diarrhea, jaundice",,pelvis dilatation,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+P19102 - GUIZMO,Persian,10/1/99,M,N,Y,PKD,8,,,,PTS,,,12/9/07,35,11/5/07,3.8,0.9,8.37,,354,,,7.48,3.39,"Chol 354.4
+ALT 73",26,"RBC 6.23
+Retic 24920",,,,"Chronic vomiting, weight loss",,PKD,,"diet, benacepril",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+P33141 - ULISES,Persian,1/1/07,M,N,Y,,4,,,"patología digestiva, neoplasia pulmonar",Died of pulmonary adenocarcinoma,,,5/20/11,,4/19/11,4.2,0.86,,,48,3.4,,6.1,2.1,"Glu 160
+ALT < 10
+FA 35",,,,,,Acute vomiting due to intestinal FB. Abnormal kidneys on US.,, loss of cortical definition,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+P26354 - NOIR,DSH,1/1/98,M,N,Y,,10,,,,PTS due to agudization and lack of response to ttmt,,,6/30/12,1610,2/2/08,7.5,0.2,1.94,,83.4,3.58,4.13,7.68,3.63,"Chol 225
+Gluc 111.6
+GGT 1
+ALT 33
+Ca 9.8",39,ok,,1045,prot +1,Coughing,,pelvis dilatation,,Diet,11/10/08,,,1.77,,47.9,4,2.03,7.6,3.59,"Chol 228
+Gluc 175.9
+bil 0.16
+Fa 33.04
+GGT 0
+ALT 28
+CK 159
+Ca 10.2
+Na 148
+Cl 114",34,ok,,,,Asymptomatic,Igual,4/4/12,,,,2.6,23,3.9,4.3,7.5,2.9,,28,,,1045,"pH 6, prot +, sang +",Asymptomatic.,,"28/6/12: Acute vomiting. Crea 9.82, urea 239.7, K 4.92, Phos 3.08, CK 12517, PCV 28, USG 1012, gluc +1, prot +, sang +4. UPCR 0.4. PAS 105. AUS: chronic changes.
+Initial improvement to creatinine of 5.8 but further deterioration to 10 and PTS 30/6/12."
+P30328 - NEUS,Siamese,7/1/85,M,Y,Y,,17,,,,PTS,,,10/16/08,192,4/7/08,2.22,0.6,3.01,,207.2,3.5,159.9,7.53,3.3,"Chol 195
+Gluc 158
+bil 0.21
+FA 86.6
+GGT 1
+ALT 64
+CK 163.8
+Ca 10.5
+Na 159.9
+Cl 122.6",27,"WBC 17170
+N 14959
+PLT 981",170,1016,"pH 5, prot +, Cocci + N",Seizures? Pu-PD-PF,, loss of cortical definition,Corynebacterium,"Diet, benacepril",6/25/08,,0.4,3.44,,283.3,4.26,6.38,7.86,2.86,"Chol 174
+Ca 10.7",,,,,,Better.,Same,,,,,,,,,,,,,,,,,,,
+P29899 - ROS,DSH,7/1/99,M,Y,N,,,PU-PD with no obvious reason,,Diabetes ,PTS due tot suspected alimentary lymphoma,,,11/19/09,708,12/12/07,,0.15,1.18,,38.4,4.76,,8.21,,"Chol 107.5
+Gluc 215
+FA 40.95
+ALT 179",37,ok,,1053,"pH 7, prot +, gluc +",PU-PD despite good diabetic control,,,Negative,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+P5338 - ROCK,DSH,1/1/92,M,Y,Y,,16,,,gingivitis/periodontitis,"PTS due to weight loss, uncontrolled gingivitis",,,9/16/08,159,4/10/08,2.9,0.8,2.86,,116.4,3.65,4.61,10.56,2.47,"Chol 168
+Gluc 96.4
+bil 0.19
+GGT 1
+ALT 25
+CK 115
+Ca 9.9
+Na 151.2
+Cl 120.2
+G-glob 4.37",24,"RBC 3.82
+VCM 62.8
+WBC 16940
+N 15077
+retic 3820",,,,"Clinically deterioraton, including gingivitis worsening.",,,,Benacepril,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+P4253 - MIXET,DSH,1/1/91,M,Y,,,17,,,,,4/16/08,0,,,4/16/13,3.3,0.4,9.22,,314.6,4.34,11.16,8.05,3.22,"Chol 314
+gluc 92
+bil 0.2
+FA 27.3
+GGT 1
+ALT 71
+CK 348
+Ca 10.1
+Na 151.1
+Cl 122.6",25,RBC 5.05,,1012,"pH 5, prot traces","Anorexia, weight loss, PU-PD, chronic V",,,,"Diet, benacepril",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+P37624 - YAGO,DSH,1/1/94,M,Y,Y,,14,,,,PTS due to development of osteosarcoma,,,3/4/09,257,6/20/08,8,0.1,2.2,,72.8,3.77,2.33,8.57,3.8,"Chol 181.2
+Gluc 127.7
+bil 0.16
+FA 24.54
+GGT 1
+ALT 54
+CK 458
+Ca 10.7
+Na 147.4
+Cl 112.2",36,ok,210,1020,"pH 6, prot +/-",PU-PD,,,,Benacepril ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+P4526 - SALY,DSH,1/1/93,F,Y,N,,,Weight loss (later defined as alimentary LSA),,neoplasia intestinal ,PTS due to clinical deterioration,,,2/26/09,17,2/9/09,2.6,0.2,1.27,,58.5,4.87,4.58,5.63,2.46,"Chol 161.6
+Gluc 123.5
+Bil 0.11
+FA 110.75
+GGT 1
+ALT 108
+CK 587
+Ca 9.6
+Na 154
+Cl 123.3",34,L 808,140,1012,pH 6,"Weight loss, mild chronic V/D",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+P40205 - EEVEE,Persian,1/1/99,M,Y,Y,,11,,,colangitis,PTS due to deterioration ok CKD,,,3/30/12,692,5/8/10,3.4,1.4,2.24,,,,5.82,6.89,1.25,"bil 5.42
+AST 125
+FA 47.67
+GGT 2
+ALT 76
+Ca 8.1",22,"RBC 5.83
+WBC 31080
+N 30148
+retic 6413",,1024,"pH 7, bil +3, prot +1, sang +1","Vomiting, weight loss, jaundice",, loss of cortical definition,,,3/30/12,2.16,,,>12,>130,3.8,,7.9,2.8,"Gluc 99
+ALT 108
+FA 45",,,,,,,,,,,,,,,,,,,,,,,,,,
+P10692 - 74,DSH,1/1/03,F,Y,Y,,7,,,hipercalcemia idiopática,PTS due to clinical deterioration,,,1/29/13,296,4/8/12,4.3,0.5,,,59,,4,6.6,2.5,"Chol 186
+Glu 220
+Ca 9.6
+ALT 31
+FA 18
+Bil 0.4
+GGT 0",26.8,"WBC 25.33
+N 22.16
+PLT 877
+RBC 4.92",170,1026,"pH 6
+prot +3
+sang +3
+intracellular rods","Acute vomiting, dysuria, hyporexia",, loss of cortical definition,neg,"Diet, benacepril",10/2/12,,,22.89,,486,4.56,20.88,7.08,,"Ca 11.3
+Chol 186",,,,,,Lethargy,,,,,,,,,,,,,,,,,,,,
+P18235 - ISIS,Persian,6/1/99,F,Y,N,,,Azotemia (prerenal?),,neoplasia intestinal ,PTS due to lymphoma,,,10/22/12,,6/14/10,4.9,0.2,1.57,,80.2,3.68,3.7,7.5,,"Chol 197.3
+Gluc 104.4
+GGT 1
+ALT 29
+Ca 10.6",33,"WBC 3830
+L 498",,1038,"pH 7, prot +, sang +",,,,,,9/18/12,3.5,,0.88,,35.1,5.56,4.38,5,,"Chol 156.3
+Gluc 141.1
+FA 73.53
+ALT 54
+Ca 8.8",24,"WBC 1640
+L 115
+N 1394
+RBC 7.2
+VCM 36.4
+retic 15840",,,,"Anorexia, weight loss, vomiting",,,,,,,,,,,,,,,,,,,,
+P10764 - HUNGKI,DSH,4/15/03,M,Y,Y,,8,,,,PTS due to progressive CKD,,,4/19/11,85,1/24/11,5.17,0.8,3.52,,180.3,3.87,5.97,8.66,,"Chol 297.8
+Gluc 173.5
+GGT 1
+ALT 46
+Ca 11.3",32,ok,160,1018,"pH 6, prot +","PU-PD, lethargy, weight loss",,renal infarcts,negative,"Diet, benacepril",2/21/11,4.4,,7.58,,240.2,3.13,7.17,,,Na 150,,,,,,,Fluid tx. No much improvement. Discharged 2 days later at 7.24 of creatinine,3/10/11,4.1,,8.42,,198.5,3.63,5.51,,,,,,,,,"Not eating much, stable",,
+P737 - MACARENO,DSH,1/1/92,M,Y,Y,,18,,,,PTS due to progressive CKD,,,5/15/11,,6/1/10,,0.2,3.12,,122.8,4.2,4.59,8.33,,"Chol 181.4
+gluc 154.4
+GGT 1
+ALT 71
+Ca 10.3",28,ok,,1015,"pH 5, prot +, sang +2",Found on routine blood work,,,Negative,diet,11/9/10,,,2.48,,105.7,3.96,3.9,7.9,3.16,"Chol 194.9
+Ca 11.9",29,,,,,,,3/28/11,4.065,0.6,3.79,,145.2,4.45,,,,"ALT 44
+gluc 134.9",,,180,,,"Weight loss, otherwise ok.",Iniciate benzepril,"9/5/11: Anorexia. Crea 9.06, Urea 408.9, Gluc 187, ALT 27, K 3.69 --> fluids
+11/5/11: Crea 6.54, urea 308, K 5.65
+12/5/11: Crea 6, urea 267.2
+15/5/11: PTS"
+P17734 - PUPUX,DSH,1/1/98,F,Y,Y,,12,,,neoplasia pulmonar,PTS due to pulmonary carcinoma,,,6/13/12,,4/29/10,,0.1,1.81,,38.5,3.79,3.92,6.07,,"Chol 188.5
+Gluc 178
+GGT 1
+ALT 62
+Ca 9.5",29,ok,,1020,"pH 6, prot traces, sang +4",Found on routine blood work,,,,diet,2/15/11,,0.1,1.97,,57.2,3.46,4.18,6.74,,"Chol 180
+Gluc 136
+GGT 1
+ALT 35
+Ca 9.5
+T4 = 2.19",30,ok,,1020,ok. Negative culture,,,10/27/11,,0.1,1.48,,57.5,3.81,3.76,5.81,,"Chol 169.3
+Gluc 5.81
+GGT 1
+ALT 30
+Ca 8.7
+T4 = 2.26",34,,,1020,,,,

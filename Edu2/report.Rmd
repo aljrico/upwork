@@ -1,9 +1,9 @@
 ---
 title: "Plots"
 output:
-  pdf_document: default
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 
@@ -25,15 +25,17 @@ library(ggridges)
 library(gridExtra)
 library(magrittr)
 
+library(knitr)
+library(kableExtra)
+
 theme_set(theme_bw())
 
 source("functions.R")
 source("misc.R")
 source("bootstrap_functions.R")
-raw_data <- fread("upc.csv")
+raw_data <- fread("extra.csv")
 
 # Cleaning Data -----------------------------------------------------------
-
 clean_data <- raw_data %>%
 	complete_cleaning()
 ```
@@ -591,12 +593,14 @@ clean_data %>%
 	facet_wrap(.~variable, scales = "free") +
 	scale_colour_got_d(option = "Tully")
 
-clean_data %>%
+table <- clean_data %>%
 	select(noquote(c("death", variables))) %>%
 	melt(id.vars = "death") %>% 
 	group_by(death,variable) %>% 
 	summarise(value_mean = mean(value, na.rm = TRUE),
 						value_sd = sd(value, na.rm = TRUE))
+
+table
 
 ```
 
@@ -632,6 +636,252 @@ tibble(variables, pvalue = pvalues) %>%
 	ggtitle("Results from Hypothesis") +
 	theme(legend.position = "none") +
 	theme(axis.text.x = element_text(angle = 30, hjust = 1))
+
+table$pvalues <- pvalues
+table 
 ```
 
 En aquest gràfic de barres podem veure el resultat del `pvalue` obtingut de tots els tests estadístics. El threshold s'ha situat a $0.05$, que és l'estàndard presentat per Fisher. El que vol dir que totes aquelles variables amb un pvalue per sota d'aquest valor, podem dir que son estadísticament significatives, pel que respecta a la mortalitat.
+
+
+# Estadis CKD
+
+```{r}
+clean_data %>% 
+  select(ckd_severity, UPCR1) %>% 
+  na.omit() %>% 
+  ggplot(aes(x = as.factor(ckd_severity), y = UPCR1)) +
+  geom_boxplot(size = 0.7, fill = hp(100, option = 'lunalovegood')[[45]]) +
+  scale_y_continuous(limits = c(0,3)) +
+  theme(legend.position = 'none') +
+  xlab('CKD Stages') +
+  ylab('UPC') +
+  ggtitle('UPC Levels on Different CKD Stages') +
+  	geom_hline(
+		yintercept = 0.4,
+		linetype = "dashed",
+		colour = "red",
+		size = 0.5
+		) +
+	annotate(
+		"rect",
+		ymin = 0.4,
+		ymax = Inf,
+		xmin = 0,
+		xmax = Inf,
+		alpha = 0.05,
+		fill = "red"
+		)  +
+		geom_hline(
+		yintercept = 0.2,
+		linetype = "dashed",
+		colour = "orange",
+		size = 0.5
+	) +
+	annotate(
+		"rect",
+		xmin = 0,
+		xmax = Inf,
+		ymin = 0.2,
+		ymax = 0.4,
+		alpha = 0.15,
+		fill = "orange"
+	)
+
+table <- clean_data %>%
+	group_by(ckd_severity) %>% 
+	summarise(upc_mean = mean(UPCR1, na.rm = TRUE),
+						upc_sd = sd(UPCR1, na.rm = TRUE)) %>% 
+  na.omit()
+
+table
+```
+
+```{r}
+pvalues <- c()
+stages <- c(1,2,3,4)
+for(i in seq_along(stages)){
+  x <- clean_data %>% filter(ckd_severity == stages[[i]]) %>% .$UPCR1
+  y <- clean_data %>% filter(ckd_severity == 0)           %>% .$UPCR1
+	pvalues[[i]] <- bootstrap_test( x = x,
+									y = y)
+}
+
+tibble(stages, pvalue = pvalues) %>%
+	mutate(colour = ifelse(pvalue < 0.05, hp(10)[[8]], hp(10, house = "Ravenclaw")[[1]])) %>%
+	ggplot(aes(x = reorder(stages,pvalue), y = pvalue, fill = colour)) +
+	geom_col(colour = "black") +
+	geom_hline(yintercept = 0.05, linetype = "dashed", size = 0.85) +
+	annotate(
+		"rect",
+		ymin = 0.05,
+		ymax = 0.7,
+		xmin = 0,
+		xmax = length(pvalues) + 0.5,
+		alpha = 0.25,
+		fill = hp(10)[[8]]
+	) +
+	xlab("") +
+	ylab("P-value") +
+	scale_fill_manual(values = col_scales, aesthetics = "fill") +
+  labs(title = 'CKD Stages vs UPC Levels',
+       subtitle = 'Results from Hypothesis Testing') +
+	theme(legend.position = "none") +
+	theme(axis.text.x = element_text(angle = 30, hjust = 1))
+
+tibble(stages, pvalue = pvalues)
+```
+## CKD Stage Evolution
+
+```{r}
+crea_bq1 <- clean_data$Crea_BQ1 %>% clean_number()
+crea_bq2 <- raw_data$`Crea BQ2` %>% clean_number()
+crea_bq3 <- raw_data$`Crea BQ3` %>% clean_number()
+
+upc1 <- clean_data$UPCR1 %>% clean_number()
+upc2 <- raw_data$UPCR2 %>% clean_number()
+upc3 <- raw_data$UPCR3 %>% clean_number()
+
+ckd_stage1 <- clean_data$ckd_severity
+
+ckd_stage2 = ifelse(crea_bq2 < 1.6, 1, 
+                               ifelse(crea_bq2 < 2.8, 2,
+                                      ifelse(crea_bq2 < 5, 3, 
+                                             4)))
+
+ckd_stage3 = ifelse(crea_bq3 < 1.6, 1, 
+                               ifelse(crea_bq3 < 2.8, 2,
+                                      ifelse(crea_bq3 < 5, 3, 
+                                             4)))
+
+df <- tibble(ckd_stage_worse = ckd_stage2 > ckd_stage1,
+       upc = upc1) %>% 
+  rbind(
+    tibble(ckd_stage_worse = ckd_stage3 > ckd_stage2,
+           upc = upc2)
+  ) %>% 
+  na.omit()
+
+df %>% 
+  ggplot(aes(x = ckd_stage_worse, y = upc, fill = ckd_stage_worse)) +
+  geom_boxplot(alpha = 0.7) +
+  scale_fill_hp_d(option = 'harrypotter', direction = -1) +
+  theme(legend.position = 'none') +
+  labs(title = 'UPC Levels on whether CKD Stage Evolution') +
+  xlab('CKD Stage Evolution') +
+  ylab('UPC') +
+  scale_x_discrete(labels = c('Equal or Better', 'Worse'))
+
+```
+```{r}
+  x <- df %>% filter(ckd_stage_worse) %>% .$upc
+  y <- df %>% filter(!ckd_stage_worse) %>% .$upc
+
+	pvalue <- bootstrap_test( x = x,
+									y = y)
+	
+communicate_result(pvalue)$msg1
+communicate_result(pvalue)$msg2
+```
+
+
+# Treatment Impact on UPC
+
+```{r}
+upc1 <- clean_data$UPCR1 %>% clean_number()
+upc2 <- raw_data$UPCR2 %>% clean_number()
+upc3 <- raw_data$UPCR3 %>% clean_number()
+
+crea_bq1 <- clean_data$Crea_BQ1 %>% clean_number()
+crea_bq2 <- raw_data$`Crea BQ2` %>% clean_number()
+crea_bq3 <- raw_data$`Crea BQ3` %>% clean_number()
+
+treatment1_benacepril <- clean_data$Ttmt_1 %>% tolower() %>% str_detect('benacepril') %>% ifelse(is.na(.), FALSE, .)
+treatment1_diet <- clean_data$Ttmt_1 %>% tolower() %>% str_detect('diet') %>% ifelse(is.na(.), FALSE, .)
+
+gg1 <- tibble(upc_before = upc1,
+       upc_after = upc2,
+       benacepril = treatment1_benacepril
+       ) %>% 
+  filter(benacepril) %>% 
+  melt() %>% 
+  ggplot(aes(x = variable, y = value, fill = variable)) +
+  geom_boxplot() +
+  scale_fill_hp_d(option = 'Ravenclaw', begin = 0.2, direction = -1) +
+  scale_x_discrete(labels = c('Before', 'After')) +
+  xlab('') +
+  ylab('UPC') +
+  ggtitle('Benacepril') +
+  theme(legend.position = 'none')
+
+gg2 <- tibble(upc_before = upc1,
+       upc_after = upc2,
+       diet = treatment1_diet
+       ) %>% 
+  filter(diet) %>% 
+  melt() %>% 
+  ggplot(aes(x = variable, y = value, fill = variable)) +
+  geom_boxplot() +
+  scale_fill_hp_d(option = 'Ravenclaw', begin = 0.2, direction = -1) +
+  scale_x_discrete(labels = c('Before', 'After')) +
+  xlab('') +
+  ylab('UPC') +
+  ggtitle('Diet') +
+  theme(legend.position = 'none')
+
+gg3 <- tibble(upc_before = upc1,
+       upc_after = upc2,
+       both = (treatment1_diet & treatment1_benacepril)
+       ) %>% 
+  filter(both) %>% 
+  melt() %>% 
+  ggplot(aes(x = variable, y = value, fill = variable)) +
+  geom_boxplot() +
+  scale_fill_hp_d(option = 'Ravenclaw', begin = 0.2, direction = -1) +
+  scale_x_discrete(labels = c('Before', 'After')) +
+  xlab('') +
+  ylab('UPC') +
+  ggtitle('Both') +
+  theme(legend.position = 'none')
+
+grid.arrange(gg1,gg2,gg3, ncol = 3)
+
+
+treatments <- c('diet', 'benacepril', 'both')
+df <- tibble(upc_before = upc1,
+       upc_after = upc2,
+       diet = treatment1_diet,
+       benacepril = treatment1_benacepril,
+       both = (treatment1_diet & treatment1_benacepril)
+       )
+
+pvalues <- c()
+for(i in seq_along(treatments)){
+  x <- df %>% filter_(treatments[[i]]) %>% .$upc_before
+  y <- df %>% filter_(treatments[[i]]) %>% .$upc_after
+  
+  pvalues[[i]] <- bootstrap_test(y,x)
+}
+
+pvalues
+
+
+# 
+# 
+# 
+# 
+# tibble(upc = upc2 - upc1,
+#        benacepril = treatment1_benacepril,
+#        diet = treatment1_diet) %>% 
+#   mutate(both = (benacepril & diet)) %>% 
+#   na.omit() %>% 
+#   melt(id.vars = c('upc')) %>% 
+#   ggplot(aes(x = value, y = upc)) +
+#   geom_boxplot() +
+#   facet_wrap(.~variable) +
+#   scale_y_continuous(limits = c(0,3))
+
+
+```
+
+

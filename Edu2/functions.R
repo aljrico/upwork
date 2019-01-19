@@ -1,5 +1,5 @@
 complete_cleaning <- . %>%
-	clean_names() %>%
+  clean_names() %>%
 	clean_na() %>%
 	select_columns() %>%
 	clean_conditions() %>%
@@ -20,6 +20,14 @@ complete_cleaning <- . %>%
 	mutate(protein = factor(protein, levels = c("Normal", "Borderline", "Proteinuria"))) %>%
 	# mutate(death = !is.na(Date_of_death)) %>%
 	mutate(death = (Outcome == "dead")) %>%
+  mutate(Survival = ifelse(is.na(Survival), followup_time, Survival)) %>% 
+  mutate(death_new = ifelse(is.na(Survival), ifelse(ymd(Date_1) - ymd(Last_followup) < 365*2, Outcome, 'alive'), NA)) %>% 
+  mutate(death_new = ifelse(Survival < 365*2, Outcome, 'alive')) %>% 
+  mutate(ckd_severity = ifelse(Crea_BQ1 < 1.6, 1, 
+                               ifelse(Crea_BQ1 < 2.8, 2,
+                                      ifelse(Crea_BQ1 < 5, 3, 
+                                             4)))) %>% 
+  mutate(ckd_severity = ifelse(CKD == 'N', 0, ckd_severity)) %>% 
 	return()
 
 
@@ -36,9 +44,9 @@ trim <- function(x) {
 
 select_columns <- function(raw_data) {
 	raw_data <- raw_data %>% as.data.frame()
-	raw_data <- raw_data[, 1:38]
+	raw_data <- raw_data[, 1:39]
 	raw_data <- raw_data %>%
-		select(Name, Breed, DOB, Sex, Neuter, CKD, Cause_CKD, Age_at_diagnosis_CKD, Outcome, Date_of_death, Date_1, Weight_1, UPCR1, Crea_BQ1, Crea_HCV1, Urea1, K1, Phos1, TP1, Alb_1, Biochem1, PCV1, CBC1, BP1, USG1, UA1, Clinical_signs1, Ttmt_1, Concurrent_conditions)
+		select(Name, Breed, DOB, Sex, Neuter,Last_followup, followup_time, Survival, CKD, Cause_CKD, Age_at_diagnosis_CKD, Outcome, Date_of_death, Date_1, Weight_1, UPCR1, Crea_BQ1, Crea_HCV1, Urea1, K1, Phos1, TP1, Alb_1, Biochem1, PCV1, CBC1, BP1, USG1, UA1, Clinical_signs1, Ttmt_1, Concurrent_conditions)
 	return(raw_data)
 }
 
@@ -46,6 +54,7 @@ clean_names <- function(raw_data) {
 	x <- colnames(raw_data)
 	x <- gsub(" ", "_", x)
 	x <- gsub("\\?", "", x)
+	x <- gsub("\\-", "", x)
 	colnames(raw_data) <- x
 	return(raw_data)
 }
