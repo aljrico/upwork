@@ -1,0 +1,442 @@
+---
+title: 'IS6481-Fall2018-Assignment-4: Binary Classifier Bake-Off'
+author: "Bhuvananjali Challagalla"
+output:
+  html_document:
+    toc: yes
+  html_notebook:
+    toc: yes
+  pdf_document:
+    toc: no
+  word_document:
+    toc: no
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=8, fig.height=6, fig.path='Figs/',
+                      echo=TRUE, warning=FALSE, message=FALSE)
+```
+
+***
+
+
+# Load Libraries
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse) # Beautiful Data Munging and visualizations
+library(data.table) # Brlazingly fast Data Munging
+library(harrypotter) # Pretty Colour Palette
+library(mice) # Predictive Imputation of Missing Values
+
+library(rpart)
+library(e1071)
+library(ROCR)
+library(pROC)
+```
+
+# Retrieve Data: The RMS Titanic Tragedy
+
+We are going to check our predictive skills making use of the very popular dataset of the RMS Titanic Passangers.
+
+With this data set we have the opportunity to test which characteristics of the passengers made them more prone to surviving the shipwreck. And it is a great opportunity to test simple binary classification models, in which we'll need to predict whether a passengers survives.
+
+```{r}
+load(url("http://biostat.mc.vanderbilt.edu/wiki/pub/Main/DataSets/titanic.sav"))
+titanic %>% glimpse()
+```
+
+# Missing Data
+
+Remove all the missing data
+
+Firstly, we can take a look at where they are:
+
+```{r, echo = FALSE}
+na_map <- function(x){
+	x %>%
+		is.na() %>%
+		melt() %>%
+		ggplot(data = .,
+					 aes(x = Var2,
+					 		y = Var1)) +
+		geom_raster(aes(fill = value)) +
+		theme_minimal() +
+		theme(axis.text.x  = element_text(angle=45, vjust=0.5)) +
+		labs(x = "Variables in Dataset",
+				 y = "Rows / observations") +
+		scale_fill_brewer(name = "", labels = c("Present", "Missing"), type = "div", palette = 4, direction = -1)
+}
+
+titanic %>% na_map()
+```
+
+Looking at this map, what we can see is that we have some columns with a huge proportion of missing values.
+
+Firstly, we should note that there are some `NA` values camouflaged as characteres that say `<NA>` or nothing at all `""`. Those are `NA` too.
+
+```{r}
+hidden_na <- function(x) x %in% c("<NA>", "")
+
+titanic <- titanic %>% mutate_all(funs(ifelse(hidden_na(.), NA, .)))
+```
+
+And then we do bootstrap in order to fill the gaps:
+
+```{r, echo = FALSE, message = FALSE}
+na_replace <- function(x){
+    if(is.vector(x) & !is.list(x)){
+        new_x <- x
+        w <- which(is.na(x))
+        y <- x[!is.na(x)]
+        for(i in w) new_x[i] <- sample(x = y, size = 1, replace = TRUE); cat(paste0("... ", floor(i/length(w)*100), "% ... \n"))
+        return(new_x)
+    }else if(is.data.frame(x)){
+        df <- as.data.frame(x)
+        ncols <- ncol(df)
+        for(i in 1:ncols){
+            cat(paste0("... ", floor(i/ncols*100), "% ... \n"))
+            x <- df[i]
+            if(sum(is.na(x)) > 0){
+                new_x <- x
+                w <- which(is.na(x))
+                y <- x[!is.na(x)]
+                for(k in w) new_x[k,] <- sample(x = y, size = 1, replace = TRUE)
+                df[i] <- new_x
+            }
+        }
+        return(df)
+    }else if(is.list(x)){
+        stop("A list can not be evaluated. Please introduce a vector instead.")
+    }else{stop("Unrecognized Format.")}
+}
+```
+
+```{r}
+imputed <- na_replace(titanic)
+titanic <- imputed
+```
+
+
+# Feature Engineering
+
+
+## Deck
+
+Looking at the values of the `room` variable, we can see some funny pattern. The first letter of the variable is telling us the `Deck`. So we can make a new variable out of this:
+
+```{r}
+titanic$deck <- factor(sapply(titanic$room, function(x) strsplit(x,NULL)[[1]][[1]]))
+```
+
+
+## Title
+
+Where the Titanic sinked, society was much more classist than now, and so we can fairly assume that those people with a proper Title in their name would have had more chances to get help from the security forces of the ship, or maybe access to more robust survival resources. Anyway, we are going to craft a variable trying to stuff this information into a predictive feature.
+
+```{r}
+titanic$title <- sub("[[:space:]].*", "", gsub('(.*, )|(\\..*)', '', titanic$name))
+
+titles <- c("Mr", "Rev", "Miss", "Mrs", "Ms", "Dr")
+
+titanic <- 
+	titanic %>% 
+	mutate(title = ifelse(title %in% titles, title, "none"))
+
+titanic$name <- NULL
+```
+
+
+# Training the Models
+
+We firstly set character variables as factors
+
+```{r}
+data <- titanic
+features <- colnames(data)
+
+for(f in features) {
+    if ((class(data[[f]])=="factor") || (class(data[[f]])=="character")) {
+        levels <- unique(data[[f]])
+        data[[f]] <- (factor(data[[f]], levels=levels))
+    }
+}
+titanic <- data
+rm(data);gc()
+
+titanic %>% glimpse()
+```
+
+
+## Split into Training & Test sets
+
+```{r}
+tr_id <- sample(1:nrow(titanic), nrow(titanic)*0.7)
+train <- titanic[tr_id,]
+test  <- titanic[-tr_id,]
+```
+
+## Binary Logistic Regression
+
+This model uses a logistic function to model the binary classification problem. Since the logistic function is bounded between $0$ and $1$, its output can be thought of as a probability. That way we can label as $1$ any output greater than $0.5$ and as $0$ any output lower than $0.5$.
+
+```{r}
+blr_model <- glm(survived ~., family=binomial(link='logit'), data = train)
+
+blr_preds_test <- ifelse(predict(blr_model,test, type = "response") > 0.5, 1, 0)
+blr_preds_train <- ifelse(predict(blr_model,train, type = "response") > 0.5, 1, 0)
+
+tr_acc <- round(1 - mean(blr_preds_train != train$survived), 4)
+te_acc <- round(1 - mean(blr_preds_test  != test$survived), 4)
+print(paste('Train Set Accuracy: ', tr_acc))
+print(paste('Test Set Accuracy: ', te_acc))
+```
+
+In general, the _Train Set Accuracy_ is always to be higher that the test set. We'll say that our model is overfitting if it is _much_ higher. How much is that? There is no clear cut answer. But we can measure the _degree of overfitting_ that our model is doing, by computing the ratio between both accuracies:
+
+```{r}
+oc_blr <- round(100*(tr_acc - te_acc)/tr_acc,6)
+print(paste0("Overfitting Coefficient: ", oc_blr))
+```
+
+The greater this number, the worse is the overfitting.
+
+## Naive Bayes Classifier
+
+This is a simple model that uses Bayes' theorem to assign probability to class labels based on the conditional probability of the features.
+
+```{r}
+nbc_model <- naiveBayes(as.factor(survived)~., data = train)
+
+nbc_preds_test <- ifelse(predict(nbc_model,test, type = "raw")[,2] > 0.5, 1, 0)
+nbc_preds_train <- ifelse(predict(nbc_model,train, type = "raw")[,2] > 0.5, 1, 0)
+
+tr_acc <- round(1 - mean(nbc_preds_train != train$survived), 4)
+te_acc <- round(1 - mean(nbc_preds_test  != test$survived), 4)
+print(paste('Train Set Accuracy: ', tr_acc))
+print(paste('Test Set Accuracy: ', te_acc))
+
+oc_nbc <- round(100*(tr_acc - te_acc)/tr_acc,6)
+print(paste0("Overfitting Coefficient: ", oc_nbc))
+```
+
+## Recursive Partitioning Tree Model
+
+Recursive partition is a method that creates recursive decision trees in order to split the population of variables into sub-populations, hence constructing probabilities in order to label the output.
+
+```{r}
+rpart_model <- rpart(as.factor(survived)~., data = train)
+
+rpart_preds_test <- ifelse(predict(rpart_model,test)[,2] > 0.5, 1, 0)
+rpart_preds_train <- ifelse(predict(rpart_model,train)[,2] > 0.5, 1, 0)
+
+tr_acc <- round(1 - mean(rpart_preds_train != train$survived), 4)
+te_acc <- round(1 - mean(rpart_preds_test  != test$survived), 4)
+print(paste('Train Set Accuracy: ', tr_acc))
+print(paste('Test Set Accuracy: ', te_acc))
+
+oc_rpart <- round(100*(tr_acc - te_acc)/tr_acc,6)
+print(paste0("Overfitting Coefficient: ", oc_rpart))
+```
+
+# Comparing Results
+
+So far we've seen the results of all three models and we can have a rough idea of what model we would prefer. However, I think measuring this once can be misleading, for the values of the overfitting coefficient may vary considerable just because of randomness. In order to smooth out this uncertainty, I decided to iterate this process $100$ times and measure the obtained Overfitting Coefficient and Test Accuracy at each iteration. This way we can assess the performance of every model properly.
+
+
+```{r, echo = TRUE, message = FALSE}
+compute_accuracy <- function(model){
+	if(model == "rpart"){
+		rpart_model <- rpart(as.factor(survived)~., data = train)
+
+rpart_preds_test <- ifelse(predict(rpart_model,test)[,2] > 0.5, 1, 0)
+rpart_preds_train <- ifelse(predict(rpart_model,train)[,2] > 0.5, 1, 0)
+
+tr_acc <- round(1 - mean(rpart_preds_train != train$survived), 4)
+te_acc <- round(1 - mean(rpart_preds_test  != test$survived), 4)
+	}else if(model == "blr"){
+		blr_model <- glm(survived ~., family=binomial(link='logit'), data = train)
+
+blr_preds_test <- ifelse(predict(blr_model,test, type = "response") > 0.5, 1, 0)
+blr_preds_train <- ifelse(predict(blr_model,train, type = "response") > 0.5, 1, 0)
+
+tr_acc <- round(1 - mean(blr_preds_train != train$survived), 4)
+te_acc <- round(1 - mean(blr_preds_test  != test$survived), 4)
+	}else{
+nbc_model <- naiveBayes(as.factor(survived)~., data = train)
+
+nbc_preds_test <- predict(nbc_model,test)
+nbc_preds_train <- predict(nbc_model,train)
+
+tr_acc <- round(1 - mean(nbc_preds_train != train$survived), 4)
+te_acc <- round(1 - mean(nbc_preds_test  != test$survived), 4)
+	}
+oc <- round(100*(tr_acc - te_acc)/tr_acc,6)	
+return(list(oc = oc,tr_acc = tr_acc,te_acc = te_acc))
+}
+```
+
+```{r, warnings = FALSE, message = FALSE}
+n_iters <- 100
+
+rpart_oc <- c()
+blr_oc <- c()
+nbc_oc <- c()
+
+rpart_te <- c()
+blr_te <- c()
+nbc_te <- c()
+for(i in 1:n_iters){
+	tr_id <- sample(1:nrow(titanic), nrow(titanic)*0.7)
+	train <- titanic[tr_id,]
+	test  <- titanic[-tr_id,]
+	
+	rpart_oc[[i]] <- compute_accuracy(model = "rpart")[["oc"]]
+	blr_oc[[i]]   <- compute_accuracy(model = "blr")[["oc"]]
+	nbc_oc[[i]]   <- compute_accuracy(model = "nbc")[["oc"]]
+	
+	rpart_te[[i]] <- compute_accuracy(model = "rpart")[["te_acc"]]
+	blr_te[[i]]   <- compute_accuracy(model = "blr")[["te_acc"]]
+	nbc_te[[i]]   <- compute_accuracy(model = "nbc")[["te_acc"]]
+}
+```
+
+And visualize the results in handy boxplots
+
+```{r, echo = TRUE, message = FALSE, warning = FALSE}
+tibble(Rpart = rpart_oc, BLR = blr_oc, NBC = nbc_oc) %>% 
+	melt() %>% 
+	ggplot(aes(x = variable, y = value)) +
+	geom_boxplot(aes(fill = variable)) +
+	scale_fill_hp(discrete = TRUE, house = "Ravenclaw") +
+	theme(legend.position="none") +
+	xlab("Model") +
+	ylab("Overfitting Coefficient")
+
+tibble(Rpart = rpart_te, BLR = blr_te, NBC = nbc_te) %>% 
+	melt() %>% 
+	ggplot(aes(x = variable, y = value)) +
+	geom_boxplot(aes(fill = variable)) +
+	scale_fill_hp(discrete = TRUE, house = "Ravenclaw") +
+	theme(legend.position="none") +
+	xlab("Model") +
+	ylab("Test Accuracy")
+```
+
+Now we can fairly say that the _Naive Bayes Classifier_ tends to less overfitting than the others. And consequently its Test Accuracy tends to be higher.
+
+# ROC Analysis and AUC
+
+Now we are going to repeat the same analysis, but for the `AUC` 
+ The implicit goal of `AUC` is to deal with situations where you have a very skewed sample distribution, and don't want to overfit to a single class.
+
+
+
+
+
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
+compute_auc <- function(model){
+	if(model == "rpart"){
+		rpart_model <- rpart(as.factor(survived)~., data = train)
+
+		rpart_preds_test <-  predict(rpart_model,test)[,2]
+		rpart_preds_train <- predict(rpart_model,train)[,2]
+
+		te_auc <- auc(test$survived,rpart_preds_test)
+		tr_auc <- auc(train$survived,rpart_preds_train)
+	}else if(model == "blr"){
+		blr_model <- glm(survived ~., family=binomial(link='logit'), data = train)
+
+		blr_preds_test <-  predict(blr_model,test, type = "response")
+		blr_preds_train <- predict(blr_model,train, type = "response")
+
+		te_auc <- auc(test$survived,blr_preds_test)
+		tr_auc <- auc(train$survived,blr_preds_train)
+	}else{
+		nbc_model <- naiveBayes(as.factor(survived)~., data = train)
+
+		nbc_preds_test <- predict(nbc_model,test, type = "raw")[,2]
+		nbc_preds_train <- predict(nbc_model,train, type = "raw")[,2]
+
+		te_auc <- auc(test$survived,nbc_preds_test)
+		tr_auc <- auc(train$survived,nbc_preds_train)
+	}
+return(list(tr_auc = tr_auc,te_auc = te_auc))
+}
+```
+
+
+```{r, message = FALSE, warning = FALSE}
+rpart_auc_tr <- c()
+blr_auc_tr   <- c()
+nbc_auc_tr   <- c()
+
+rpart_auc_te <- c()
+blr_auc_te   <- c()
+nbc_auc_te   <- c()
+
+n_iters   <- 100
+
+for(i in 1:n_iters){
+	tr_id <- sample(1:nrow(titanic), nrow(titanic)*0.7)
+	train <- titanic[tr_id,]
+	test  <- titanic[-tr_id,]
+	
+	rpart_auc_tr[[i]] <- compute_auc(model = "rpart")[["tr_auc"]]
+	blr_auc_tr[[i]]   <- compute_auc(model = "blr")[["tr_auc"]]
+	nbc_auc_tr[[i]]   <- compute_auc(model = "nbc")[["tr_auc"]]
+	
+	rpart_auc_te[[i]] <- compute_auc(model = "rpart")[["te_auc"]]
+	blr_auc_te[[i]]   <- compute_auc(model = "blr")[["te_auc"]]
+	nbc_auc_te[[i]]   <- compute_auc(model = "nbc")[["te_auc"]]
+}
+```
+
+```{r, echo=TRUE, message = FALSE, warning=FALSE}
+tibble(Rpart = rpart_auc_tr, BLR = blr_auc_tr, NBC = nbc_auc_tr) %>% 
+	melt() %>% 
+	ggplot(aes(x = variable, y = value)) +
+	geom_boxplot(aes(fill = variable)) +
+	scale_fill_hp(discrete = TRUE, house = "Ravenclaw") +
+	theme(legend.position="none") +
+	xlab("Model") +
+	ylab("AUC (Training Set)")
+
+tibble(Rpart = rpart_auc_te, BLR = blr_auc_te, NBC = nbc_auc_te) %>% 
+	melt() %>% 
+	ggplot(aes(x = variable, y = value)) +
+	geom_boxplot(aes(fill = variable)) +
+	scale_fill_hp(discrete = TRUE, house = "Ravenclaw") +
+	theme(legend.position="none") +
+	xlab("Model") +
+	ylab("AUC (Test Set)")
+```
+
+We would say that our best model is the `Naive Bayes Classificator`, because its `AUC` in the Test Set tends to be higher.
+
+So its `ROC` curve would be:
+
+```{r}
+tr_id <- sample(1:nrow(titanic), nrow(titanic)*0.7)
+train <- titanic[tr_id,]
+test  <- titanic[-tr_id,]
+	
+nbc_model <- naiveBayes(as.factor(survived)~., data = train)
+
+nbc_preds_test <- predict(nbc_model,test, type = "raw")[,2]
+nbc_preds_train <- predict(nbc_model,train, type = "raw")[,2]
+
+plot.roc(test$survived,nbc_preds_test)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+

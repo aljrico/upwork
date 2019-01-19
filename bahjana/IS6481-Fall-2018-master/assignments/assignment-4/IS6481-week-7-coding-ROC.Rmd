@@ -1,0 +1,145 @@
+---
+title: "IS6481-Fall2018-Week-7-Coding-And-ROC"
+author: "Lynd Bacon, lynd.bacon@hsc.utah.edu"
+output:
+  html_notebook:
+    toc: yes
+  pdf_document:
+    toc: no
+  html_document:
+    toc: yes
+---
+
+Creative Commons CC by 4.0 Lynd Bacon & Associates, Ltd.
+
+### Factors
+
+Many R model functions "understand" how to handle categorical predictors when they are _factors_.
+
+Here's an example.  Let's suppose we have a categorical that's coded 1,2,3 or 4.  Let's make some example data:
+
+```{r}
+set.seed(999)
+numLabels=sample.int(30,n=4,replace=TRUE)
+table(numLabels)
+```
+
+If we were to use numLabels as a predictor variable in an R regression function, the function would mistake it as a continuous variable, and it would end up with a single regression coefficient.  But it should have three coefficients.  
+
+We can convert it to a factor so that an R regression will "understand" what to do with it:  
+```{r}
+numFac=as.factor(numLabels)
+class(numFac)
+levels(numFac)
+```
+### Coding of Categorical Predictors
+
+Most R regression functions, like `lm()`, and `glm`, will automatically code a predictor variable that's a factor.  It will use whatever the default coding method is for your R session.  If you want to see what your defaults are, do:
+
+```{r}
+options()$contrasts
+```
+"unordered" is what it does for an factor whose levels aren't ordered, and "ordered" is for one that has ordered levels, like e.g. ranks.
+
+You can find out more about contrasts in R using the R help or the help panel in RStudio.  contr.treatment is the usual default.  Here's what our "treatment" coding would be for our four level factor numFac:
+
+```{r}
+contr.treatment(4)
+```
+Note that this is _dummy_ coding. The default base, or "reference" level that's coded with zero's is the first one.  We could change that, e.g.:
+
+```{r}
+contr.treatment(4,base=4)
+```
+
+What R calls contr.sum is _effects_ coding:
+
+```{r}
+contr.sum(4)
+```
+
+You can set how individual factors are coded using the `C` method.  For example, if we wanted numFac to a effects coded predictor, we could put it in our model as `C(numFac,contr.sum,4)`.
+
+You can set the default coding for factors in an R session by setting it in `options()`: 
+
+```{r}
+options()$contrasts
+options(contrasts=c('contr.sum','contr.poly'))
+options()$contrasts
+```
+
+### ROC Analysis and AUC
+
+ROC analysis and AUC are used for assessing the performance of binary classifiers.
+
+ROC = Receiver Operating Characteristic
+
+AUC = area under the curve
+
+There are a number of related performance measures that are from areas like information retrieval and biostatistics.
+
+The `ROCR` package provides a number of different classifer performance measures.  There are several other R packages that help with ROC analysis, e.g. `AUC`, `caTools`, and `pROC`, but `ROCR` and `AUC` are good enough for the purposes of Assignment 4.  Let's attach it to our session and take a look at the examples in its help information:
+
+```{r}
+library(ROCR)
+```
+The `performance()` function in `ROCR` is going to do much of what you need for this assignment.  Let's load up it's example data:
+
+```{r}
+data(ROCR.simple)
+```
+
+`ROCR` is a list with two named vectors in it:
+
+```{r}
+is.list(ROCR.simple)
+names(ROCR.simple)
+```
+
+If you follow the example in the help, you first need to create a "prediction" object, and then you use it to get performance measures that can be plotted:
+
+```{r}
+pred <- prediction(ROCR.simple$predictions,ROCR.simple$labels)
+perf <- performance(pred,'tpr','fpr')
+plot(perf)
+```
+This will likely be a funky (i.e., ugly) ROC plot, but it will give you the basic idea of what an ROC curve is about.  You can get AUC out with:
+
+```{r}
+performance(pred,'auc')
+```
+"y.values" in the output is the AUC.
+
+The `AUC` package also provides some performance measures:
+
+```{r}
+library(AUC)
+```
+
+This package provides some example data in a data.frame called `churn`.  Let's get it:
+
+```{r}
+data(churn)
+dim(churn)
+names(churn)
+```
+
+If you take a look at the help information, you'll find that you can get an AUC estimate like this:
+
+```{r}
+auc(roc(churn$predictions,churn$labels))
+```
+
+You can plot an ROC like:
+
+```{r eval=FALSE}
+plot(roc(churn$predictions,churn$labels))
+```
+
+### AN IMPORTANT NOTE
+
+When trying to use the `ROCR` and `AUC` packages, pay close attention to the types of data objects that they use. From the example above you'll see that `ROCR` is using a named list to hold data.  `AUC`, on the other hand, used a data.frame. To use the functions in either package for this assignment, you'll need to put the data you want them to "ingest" into the required form.
+
+### Uncertainty
+
+Finally, note that you can get an estimate of the standard error of AUC using the `pROC` package.  Uncertainty is important, no?

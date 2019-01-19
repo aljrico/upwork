@@ -1,0 +1,150 @@
+---
+title: "Assignment 1 Bits and Bytes"
+author: "Lynd Bacon, lynd.bacon@hsc.utah.edu"
+output:
+  html_notebook:
+    toc: yes
+  pdf_document:
+    toc: yes
+  html_document:
+    toc: yes
+---
+
+### What This Is
+
+Here are some tidbits about your Assigment 1.  What follows is to give you a little kick start on the kinds of things you'll be doing in this course's assignments.  Complete, extensive examples for the remaining four assignments will _not_ be provided.  But comments on code submitted in assignments will be, as well as hints and tips in the assignment Huddles on Canvas.
+
+So, here goes.
+
+### Get the Library(ies) Needed
+
+The following chunk loads the tidyverse collection of packages.
+
+```{r message=FALSE}
+library(tidyverse)
+```
+If you had begun the above code chunk w/o `message=FALSE` you'd get output indicating the packages loaded, what if any conflicts resulted, etc.
+
+### Get The Data
+
+Here we "attach" the packages with the flights data to our current environment.
+
+```{r}
+library(nycflights13)
+```
+
+Where did this package get included in our session?  Use the `search()` command to see where it is. If you want to see what's in it, try `ls("package:nycflights13")`.
+
+Next we're going to get the flights data out of this package:
+
+```{r}
+data(flights)
+```
+The "type" of this flights object, the names of the variables in it, and the "dimension" (rows and columns) of it:
+```{r}
+class(flights)
+names(flights)
+dim(flights)
+```
+Not a very small data set.
+
+### Selecting, Filtering, Summarizing, Calculating
+
+__Number of flights in August or October__.  How are months respresented as data values? 
+
+```{r}
+unique(flights$month)
+```
+We could have done this in other ways, of course, like by using the _Environments_ tab in the upper right window of RStudio.
+
+So, let's get the number of flights in August or in October:
+
+```{r}
+nrow(filter(flights,month==8 | month==10))
+```
+Alternatively,
+```{r}
+flights %>%
+  filter(month==8 | month==10) %>%
+  nrow()
+```
+There are other ways to do it.
+
+What is the __Median Distance of All Flights__?  Here you need to know what the _median_ is.  See help(median).  One of the ways to do this:
+
+```{r}
+flights %>% 
+  select(distance) %>%  # assuming that distance is the col
+    unlist() %>%    # this gets the numeric values of a tibble column
+          median()
+```
+__Any Missing Values?__  Here's one way.  A shorter way is to use a "wrapper" function like `colSums()`, but in what follows you'll see an example of using the `apply()` function to "apply" a simple function to each column of a data.frame or a tibble.  The _apply_ "family" of functions (apply(), lapply(), tapply(), sapply(), etc.) comprises a set of useful tools.
+
+First, find out is there are any NA's:
+
+```{r}
+anyNA(flights)
+```
+
+
+```{r}
+### Here's your simple function.  R functions are very useful.
+sumNAs=function(x){
+  return(sum(is.na(x)))
+}
+apply(flights,2,sumNAs)  # this applies our sumNAs function to each column
+```
+__Sort by arrival delay, list the carriers with the 10 longest arrival delays__. The easiest interpretation is that there can be between one and 10 carriers with the 10 longest arrival delays.  So we need to pick out the records with the 10 longest arrival delays, and the carriers associated with these 10 records.
+
+As usual, there is more than one way to do this.  The variables of interest are _carrier_ and _arr_delay_. 
+
+```{r}
+flights %>%
+  select(carrier, arr_delay)  %>%
+     arrange(desc(arr_delay)) %>%
+          head(10)
+```
+Another way to do this. (Harder to read, for sure.)
+```{r}
+head(flights[order(flights$arr_delay,decreasing=TRUE),c("carrier","arr_delay")],10)
+```
+Strictly speaking, the assignment asked that you list the carrier names. They are the unique values in the carrier column of the result:
+
+```{r}
+unique(head(flights[order(flights$arr_delay,decreasing=TRUE),c("carrier","arr_delay")],10)$carrier)
+```
+
+__Departure and arrival delay variables in hours__.
+```{r message=FALSE}
+flights2=flights
+mutate(flights2,
+       dep_delay_hrs=dep_delay/60,  # assumes existing times are in minutes
+       arr_delay_hrs=arr_delay/60)
+```
+What do you make of the negative values?
+
+__Average departure delay times for AA, UA, DL__.  
+
+Note that in the following, records with missing values (NAs) for departure delay are filtered out.  The descriptive stats are for the records for the three carriers that don't have NA for dep_delay.
+
+```{r}
+flights %>%
+  select(carrier,dep_delay) %>%
+    filter(carrier=='AA' | carrier=="UA" | carrier=="DL", !is.na(dep_delay)) %>%
+      group_by(carrier) %>%
+        summarize(mean=mean(dep_delay),n=n())
+```
+Another way:
+
+```{r}
+flights4=subset(flights,carrier=='AA' | carrier=='UA' | carrier=='DL',select=c(carrier,dep_delay))
+by(flights4$dep_delay,flights4$carrier,mean,na.rm=TRUE)
+```
+A little different.  Note the use of the `%in%` function.
+
+```{r}
+flights4=flights[flights$carrier%in%c('AA','UA','DL'),c('carrier','dep_delay')]
+by(flights4$dep_delay,flights4$carrier,mean,na.rm=TRUE)
+```
+That's all, folks!
+

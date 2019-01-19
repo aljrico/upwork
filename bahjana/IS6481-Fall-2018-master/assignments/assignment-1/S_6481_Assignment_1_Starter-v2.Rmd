@@ -1,0 +1,116 @@
+---
+title: "IS_6481_Assignment_Starter-v2"
+author: "Lynd Bacon, lynd.bacon@hsc.utah.edu"
+output:
+  html_notebook:
+    toc: yes
+  pdf_document:
+    toc: yes
+  html_document:
+    toc: yes
+---
+
+Creative Commons CC by 4.0 Lynd Bacon & Associates, Ltd.  
+
+---
+### Introduction
+
+In this first assignment you're going to work through some examples based on the 2017 Garrett Grolemund and Hadley Wickham book [R for Data Science]( http://r4ds.had.co.nz).  Be sure you have this book "cracked open" before starting on this assignment.
+
+In the following, some R code has been provided to get you started on the different parts of what you need to do. Be sure you are doing your work in an **R Notebook**.  You'll render (convert) your Notebook to a pdf file that you'll upload to Canvas.
+
+R Notebooks (as well as R markdown documents) combine Markdown text, R code, and results.  "Markdown" is a simple formatting language that's easy to use.  Here are some of the many resources that describe it:
+
+* [Gruber's 'Daring Fireball' Project](https://daringfireball.net/projects/markdown/)  
+* [A Markdown Cheat Sheet on GitHub](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+* [R Markdown Definitive Guide](https://bookdown.org/yihui/rmarkdown/)  
+
+R Code in a Notebook is entered as "chucks" inside curly braces, like:
+
+```{r}
+cat("I am R code.")
+```
+(If you can't see the curly braces in the outputted notebook, look in the markdown file itself.)
+
+Just above is the output of the cat() command, which by default is "Linux-ese" for print to standard output.
+
+It's all not too complicated.  You'll get the hang of it with some practice.
+
+### What Goes Into Your Assignment
+
+Before you convert your Notebook to pdf for submission, eliminate anything that's not relevant to your work, e.g. content from me.
+
+Be sure to rename your Notebook before submitting it so I can tell it's from you, and what it's for.  For example, you could do as your Notebook file name firstname-lastname-assignment-1.Rmd, which would become firstname-lastname-assignment-1.pdf after conversion. (Use your real names, of course.)
+
+*pdf can be fussy.*  Sometimes, conversion to pdf can be stubborn.  Try to do it sooner than later.  If all else fails, convert to html, but post about your conversion issue to Canvas so we can look into it.
+
+**IMPORTANT NOTE: Try to limit your assignment submission to _no more than six (6)_ pages.**
+___
+
+**Questions for You to Answer**.  They are numbered, e.g. 1., 2., 3., etc. Be sure to answer each of these _fully_ in the work on this assignment that you turn in.  Include relevant code (e.g. code you used to get an answer or result) and any requested results.
+
+### So, Let's Get Started
+
+During the first week of class you had opportunity to look at the Boston housing data included in the MASS library.  Here we're going to work with some data 
+
+Crack open the G&W book, and go to Chapter 5.  Much of what you'll need is there, or close by.
+
+Load the _tidyverse_ library.  (You'll need to install this if you haven't already.)
+
+```{r}
+library(tidyverse)
+```
+The data we're going to chew on are the NY flights data:
+```{r}
+library(nycflights13)
+```
+Get an error?  You'll need to install this, then.  
+
+To see the documentation on this data, do `??flights` at the command prompt.
+
+### Describing This Data
+
+As has probably occurred to you by now, R stores data in a variety of different "containers."  These things are R *objects* in the object-oriented sense.  They have data and *methods*, and the methods are like behaviors.  
+
+If you've loaded the `ncyflights13` library, and you do a `search()` at the command prompt, you should see a `package:nyflights13` in the list that's returned. The `flights` data is in this package.  You can get it into your current `.GlobalEnv` (your default workspace) by doing:
+
+```{r eval=FALSE}
+data(flights)
+```
+`eval=FALSE` means don't run this chuck.  Remove it to run it.
+
+(1) Now, what kind of R thing is `flights`? Describe it in words. (Hint below)
+
+```{r eval=FALSE}
+class(flights)
+```
+(Answer here!)
+
+(2) What are the _variable names_ in `flights`? 
+
+(Answer here)
+
+(3) What are the "dimensions" of `flights`?  (How many rows, how many columns?)
+
+(You know what goes here)
+ 
+Referring to Chapter 5 in the Grolemund and Wickham book, use the tools in the `dplyr` library to help in answering the following.  Be sure to include your code.
+
+(4) How many flights are there in the data that were in either August or in October?
+
+(And so on)
+
+(5) What is the median flight distance of all of the flights?
+
+(6) Do any of the variables in the `flights` data have any missing values?  If so, how many missings are there on each variable that has them?
+
+(7) Sort the `flights` data in descending order of flight arrival delay.  List the carriers with the 10 largest arrival delays.
+
+(8) Add new variables to the `flights` data that are departure delay in hours, and arrival delay in hours.
+
+(9) What are the average departure delay times for the carriers AA, DL, and UA?
+
+___
+
+That's all, folks!  I'm looking forward to seeing your good work on the above.
+

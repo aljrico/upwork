@@ -1,0 +1,60 @@
+---
+title: "IS6481-Fall2018-Assignment-2"
+author: "Lynd Bacon, lynd.bacon@hsc.utah.edu"
+output:
+  html_notebook:
+    toc: yes
+  pdf_document:
+    toc: no
+  html_document:
+    toc: yes
+---
+
+Creative Commons CC by 4.0 Lynd Bacon & Associates, Ltd.
+
+### Introduction
+
+Many organizations collect data from their customers and stakeholders to understand their perceptions and preferences.  A venerable business adage is "Know Your Customers," or "KYB" for short.
+
+The App Happy Company wants to better understand what they believe is the market for a new social entertainment app they are thinking of developing and marketing.  They are currently in the business of providing B2B analytic apps, and they don't yet have a product in the consumer entertainment app category.
+
+App Happy hired the Consumer Spy Corporation (CSC) to survey consumers in the market of interest.  CSC collected data from a sample of consumers, and provided App Hapy with a dataset of their responses.  The survey questionnaire (see the file _apphappy-survey-questionnaire-dictionary-2018.pdf_) was based on preliminary qualitative research that included focus groups and one-on-one interviews.
+
+App Happy eventually wants to use the data to do a market segmentation analysis in support of developing new product strategy and tactics.  But first it wants to understand the data better, and to address what might account for differences between customers based on how much they pay for apps that they are currently using.
+
+### Your IS 6481 Mission, Should You Choose to Accept It
+
+Help App Happy know its customers (and potential customers) better.
+
+Do the following using R, in a R markdown (.Rmd) document, and submit both your .Rmd file and a pdf version of it on Canvas.  Details follow.
+
+__What To Do__
+
+(1)  Do an exploratory analysis of App Happy's data to summarize it. "EDA" is the usual preliminary, important step in any analysis effort. Note in particular any missing values, anomalous codes, and so on. 
+
+(2) App Happy is thinking about segmenting the market based on customers _attitudes_, so note in particular any of the responses to questions q24, q25, and q26 (these are measured on a rating scale called a _Likert_ scale) that have either very little or relatively large variation.  Also summarize the correlations between these items.
+
+(3) App Happy wants you to estimate models that predict whether a respondent _only_ uses free apps. This is indicated by the data of variable q12.  Randomly split the sample into a model estimation sample and a model test sample, 80% estimation, and 20% test.  Use the estimation sample to estimate _both_ a binary logistic regression model, _and_ a binary probit regression model. For each type of model, use the _demographic_ variables in the data.  These are variables q1, and q48 through q57, but omit variable q54. (Why might a company omit q54 from its analyses?)
+
+For each type of model (logit and probit), calculate its _predictive accuracy_ in terms of percent correct prediction of responses, for both the estimation data and for the test data.  (Question: what do differences between the two tell you about your model?).  
+
+(4) Provide App Happy with any insights about or comments on the data that you can offer.  If you know of other ways the predictive models should be evaluated, be sure to suggest them.  Also mention any assumptions that you think might be important to the how App Happy should interpret the results you are providing them with.
+
+__How To Do It__
+
+__Two data.frames in one__. Input the R data file into R.  In it you'll find two data.frames.  Both have the same variables, but one has numeric codes for the survey responses, and the other has the _character strings_ that labelled the response alternatives in the questionnaire.  For example, for q48, which is about the highest level of education attained, the numeric data will have numeric codes from 1 to 6 (if they are all correct codes), while the character data will have things like "Some college" and "High school graduate."  The numeric data are what you should analyze.  The character data can help in understanding the numeric data.
+
+__Estimate and iterate__.  When estimating regression models to predict something, it's good practice to estimate a model, assess how well it predicts, and then to go back to see if removing predictors has any appreciable impact on the model's predictive performance.  That is, you estimate a model, see how accurately it predicts, drop any predictors from it that appear to be "not signficant," and check the model's accuracy again.  The point of this is to come up with the most parsimonious model, since parsimonius models tend to generalize better to new data. (Usually more bias, but less variance. We'll be discussing this more as the semester progresses.)  This is usually an _iterative_ process, and often an unavoidable one if good modeling results are to be obtained.  Note that it's possible for a variable to _not_ be a significant predictor in a conventional sense (e.g. p > 0.05), while still impacting predictive accuracy.   (It's statistics, an oftentimes odd universe.) 
+
+You can estimate both types of model using R's __glm()__ methods.  Be sure to check out the R help pages about glm().  R provides a way to get predictions out of logit, probit, and other sorts of models.  A method that works for several of them is the __predict()__ method.  (When I refer to a "method" in R, I usually mean what also might be called a _function_. There are many built-in functions as you know.)
+
+By the way, the sure way to get good at modeling is to fit a lot of models.
+
+__Workd product organization and format__.  Organize your Notebook such that it effectively communicates what you did, and what you found, to other persons who might want to replicate your work.  Think of how you do it as telling your "story" about what you did, your results, and your interpretations. Don't exceed ten (10) pages in length in your pdf document.  Staying within this limit may require you to decide what's important to include in your report, and what can be gotten rid of.  A design principle is to "keep what's essential, and get rid of the rest."  Include what's important for a reader to understand your story.  Don't be WET ('waste everyone's time') by including content that's unimportant or irrelavant.
+
+Last but not least, be sure to post questions (as well as suggestions for your classmates) to the Asssignment 2 Huddle.
+
+__When To Do It By__
+
+The submission date is indicated on Canvas.  Try not to be late!
+

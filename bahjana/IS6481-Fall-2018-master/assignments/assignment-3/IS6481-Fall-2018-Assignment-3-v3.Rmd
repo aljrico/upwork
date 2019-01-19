@@ -1,0 +1,129 @@
+---
+title: "IS6481-Fall2018-Assignment-3"
+author: "Lynd Bacon, lynd.bacon@hsc.utah.edu"
+output:
+  html_notebook:
+    toc: yes
+  pdf_document:
+    toc: no
+  html_document:
+    toc: yes
+---
+
+Creative Commons CC by 4.0 Lynd Bacon & Associates, Ltd.
+
+_This assignment is worth 120 points towards your course letter grade._  Be sure to get started on it without delay.
+
+Do the following in no more than twelve (12) pages.  Turn your work in on Canvas as a pdf file you produced from RStudio, if at all possible.  If you can't produce a pdf file, please try to turn your work in in a doc file, a docx, file, or in an html file.  Note that you should be able to convert one of these other types by printing or exporting to a pdf file from Word or another word processor, or from a browser.
+
+Be sure to "tell the story" of what you did.  Include syntactically correct code, and explain it and the results it produced.  Avoid including extraneous content or results.  Remember that you're trying to explain what you did and what you got well enough that a sentient business analyst could replicate (reproduce) what you did.
+
+### App Happy Looks More Closely At Technology Attitudes and The Social Entertainment Market
+
+Based on your work on the survey data it had collected, the company wants to now understand potential customers, and in particular, to understand _differences_ between customers, differences that it might want to plan for in offering a new product.
+
+It want to start by looking at customers' attitudes about, or orientation in regard to, technology.  You'll recall from Assignment 2 that the survey App Happy had conducted included question about technology.  They are the questions in the q24 section of the questionnairre.  You may remember that respondents answered these question on a 1 to 6 rating scale, on which 1 = agree strongly, and 6 = disagree strongly.  App Happy wants you to analyze these data to determine whether it seems like there are two or more _types_ of customers based on how they answered the q24 questions.  Given that there are, it wants you to describe each type using the demographic variables you used in Assignment 1 to predict whether a respondent uses only free apps on their smart phone.
+
+### Here's What To Do
+
+__PART 1__
+
+This part is the requisite "pound the data into shape" part.
+
+1. Input the App Happy numeric data into R
+2. Put the q24 variables into their own data.frame (or tibble). Let's call this data.frame (tibble) `Q24`.  Include the `caseID` variable with the q24 variables. `caseID` is an unique respondent identifier.  There are twelve (12) ratings variables in Q24.  The 
+3. "Reverse" each of the ratings so that the numbers now mean 1=strongly disagree, and 6=strongly agree.  (Hint: try doing Q24 = 7-Q24.  The "7" is the number seven. Make sure you exclude `caseID` when you do this.)
+3. Check the q24 data for missing values.  If there are any rows with missing data, copy only the complete data rows (the ones without any missing values) into a new data.frame (tibble) named `Q24nm.`
+
+__PART 2__ 
+
+Now, for some cluster analyses.  You're going to a single clustering method for this assignment, _kmeans_ clustering.  The R function for doing it is called `kmeans()`. The '()' are where you put in data, parameters, and so on, for the algorithms this function runs (or tries to run). It produces an "r object" that contains the clustering results.  _kmeans_ attempts to split, or partition, a data set into groups such that the data observations (rows) are closest to the group, or "cluster," means. It is in the `stats` package which should be in your R session by default.  Use the command `search()` at the console command prompt to see if it (the stats package) is there.
+
+Here we go.
+
+__Four Cluster KMeans Solution__
+
+4. Get a _four cluster_ kmeans solution using all the data in Q24 except for the `caseID` variable.  Use all twelve (12) ratings variables for clustering.  Here's some starter code.  It's assumed that the rating scales are the first twelve columns in Q24nm, so `caseID` is the 13th.  Change as needed:
+
+```{r eval=FALSE}
+km4=kmeans(Q24nm[,1:12],4)  # The 4 means return four clusters see help(kmeans)
+```
+_km4_ is your result. It has things in it:  
+
+```{r eval=FALSE}
+names(km4)
+```
+In _km4_ there is a vector called _cluster_ that indicates with numbers which cluster each data observation ended up in. Here's a quick look at how many rows of data ended up in each of the three clusters:
+
+```{r eval=FALSE}
+table(km4$cluster)
+```
+How can we know more about now these clusters might differ?  We can start to look by comparing them using summary statistics.  Here's a simple R _function_ that will make this a little easier:
+
+```{r eval=FALSE}
+seg.summ=function(data,groups){
+  aggregate((data,list(groups),function(x) mean(as.numeric(x))))
+}
+```
+If you run the above chunk, nothing will happen, assuming no syntax errors.  Here's how  you use it on the q24 data you clustered on:
+
+```{r eval=FALSE}
+seg.summ(Q24nm[,1:12],km4$cluster)
+```
+5. Interpret differences between the clusters based on these summary means, and referring to what the questions were that respondents answered when they provided their rating responses.  Where are the largest differences you see?
+
+Note, if seg.summ is giving you too many significant digits, try putting it in the `round()` function, like `round(seg.summ(Q24nm[,1:12],km4$cluster),3)`.
+
+6. Use the documentation for the `kmeans()` function to describe what the other results are that are in `km4`.  You saw them listed when we did `names(km4)`, above.  Note that many results in R are like this kind of thing: a _list_ with names for the things that are on the list.  So `cluster` is a thing in the list `km4.`  We can get it as `km4$cluster`.  Note that you can get a column in a data.frame or a tibble the same way.
+
+7. Now, use the  `seg.summ()` function to inspect the means of the clusters on the responses to the rating scale responses to the questions in q25.  What differences between clusters do you see?
+
+8. Some of the data you didn't use for clustering is _categorical_ in nature.  Gender is an example. For this sort of data it doesn't make sense to use means in describing it. But you can _tabulate_ it to compare it based on counts and percentages. An R function that will do that for you is `xtabs()`, which is also in the stats packages. So:
+
+_Use the `xtabs()` function to compare your three clusters on the demographic variables you used for those regression models in Assignment 2, and describe the cluster differences you observe.
+
+__PART 3__
+
+An important question when doing cluster analysis is "How many clusters are there?"  That is, given a clustering method and a specific data set, what number of clusters best describes how the observations differ from each other? In theory, there could be from one to as many clusters as there are observations. But too many, and the results may not "hold up," they may be reflect both stable differences, and also random noise.
+
+In this part of the assignment you're going to apply an R function that calculates different measures of cluster "goodness" for possibly a range of numbers of clusters, and provides some recommendations about the "best number."  This function is in the R package `NbClust`, which you'll probably need to install before you can use it.  We'll be talking about deciding on the "best" number of clusters and using this function in upcoming webinars, but here's what you need to do with it for this assignment.
+
+9.  Install the R package `NbClust` from your favorite R mirror site.
+10. Load the package into your R session: `library(NbClust)` should do it for you.
+11. Review the help info for NbClust
+11. Use the `NbClust` function to get analytic results as follows:
+
+```{r eval=FALSE}
+NbRes1=NbClust(Q24nm[,1:12],method='kmeans',index='gap')
+```
+12. Based on the above, `NbRes1` will include a recommended "best" number of clusters as `NbRes1$best.nc`.  What recommended number did you get?  Is it different from four (4) clusters, the number we calculated for, above?  If so, repeat the kmeans analysis using the number suggested by `NbClust`.  Repeat your comparisons using `seg.summ()` and `xtabs()`, and describe any differences you observe.
+
+Be sure to look up what that _gap_ index, or statistic, is.
+
+Tip: [Gap Statistic](https://web.stanford.edu/~hastie/Papers/gap.pdf)  
+Also: [NbClust](https://www.jstatsoft.org/article/view/v061i06)
+
+__Lucky 13__
+
+You _are_ lucky.
+
+13. Above you've "eyeballed" differences between clusters based on the results from `seg.summ()` and from `xtabs()`.  What limitations do you perceive in this approach to understanding differences between clusters?  How might App Happy's decisions or conlusions about their customers be affected if you were to provide them with results based on this approach?
+
+__Rescaling Used in Clustering__
+
+Sometimes the data used for cluster analysis are transformed or rescaled in various ways.  The same is true for regression modeling.
+
+One way that the data used in cluster analysis are rescaled is by subtracting from each variable it's mean, and dividing the result by the variable's standard deviation.  Other recaling methods exist, e.g. what's sometimes called _normalization_.  But many are used with the purpose of reducing the influence of variables with large variation on the results of cluster analyses.  Next you're going to redo your last cluster analysis again, after having rescaled those 12 variables you clustered on.
+
+14. You can use the R function `scale().`  See the R help for it. You're going to both "center" the variables, and "scale them."
+
+```{r eval=FALSE}
+Q24nms=scale(Q24nm[,1:12])  # assumes the 12 vars are in the first 12 cols
+```
+Check the data values after doing this to see that they each have a mean of zero, and a standard deviation of 1:
+```{r eval=FALSE}
+apply(Q24nms,2,summary)  #do you know what this does, how it works?
+```
+Next, do a kmeans clustering on your rescaled data. Specify as the number of clusters the "best" number that the `NbClust` function indicated, above.  Apply the function `seg.summ()`, and as before, and note any differences between the clusters based on their means.
+
+

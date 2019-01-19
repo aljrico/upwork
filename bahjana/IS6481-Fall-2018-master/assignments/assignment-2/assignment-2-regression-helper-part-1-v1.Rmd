@@ -1,0 +1,67 @@
+---
+title: "Assignment 2 Regression Modeling Helper Part 1 v1"
+author: "Lynd Bacon, lynd.bacon@hsc.utah.edu"
+output:
+  html_notebook:
+    toc: yes
+  pdf_document:
+    toc: no
+  html_document:
+    toc: yes
+---
+
+Creative Commons CC by 4.0 Lynd Bacon & Associates, Ltd.
+
+### Introduction
+
+What follows is intended to give you a kick start on the regression modeling part of this assignment.  Before you do any modeling you'll need to:
+
+* Input the assignment data
+* Do any required transformations of the data, create new variables you need.  For example,you need to crate a binary (1/0 variable) from the responses to q12.
+
+Let's do a trial run here.
+
+### Get the data, create what you need
+
+The survey data are in the file appHappyData-2018.RData.  This is an R system file that has two data frames in it.  One data frame has numerical data, and the other has character data.  We want to work with the former.
+
+Assuming that this data file is in the current working directory:
+
+```{r}
+appHappyData=load('appHappyData-2018.RData')
+ls()
+```
+You should see the two apphappy data frames listed.
+
+names(apphappy4.num.frame)
+Let's give the data we'll be working with a shorter name, and pick out some variables to use:
+
+```{r}
+appHappyNum=apphappy.4.num.frame[,c('q12','q48','q49','q50r1')]
+```
+
+
+Let's make the binary dependent variable we need, now.  Here's one way to do it.
+Note that we've inserted it into the data.frame we're working with.  The use of table() provides a quick check on the recoding: 
+
+```{r}
+appHappyNum['onlyFreeApps']=as.numeric(appHappyNum$q12>=6)
+table(appHappyNum$q12, appHappyNum$onlyFreeApps)
+```
+
+### Now for a "starter" logistic regression model
+
+Let's predict _onlyFreeApps_ using q48 and q49.
+
+```{r}
+logModel1=glm(onlyFreeApps~q48+q49,data=appHappyNum,family=binomial(link=logit))
+summary(logModel1)
+```
+### Some things to note, to think about
+
+Note how a model formula is specified in R:  `onlyFreeApps~q48+q49`.
+
+For a probit type model, change `link=logit` to `link=probit`.
+
+What is "AIC" in the agove output?
+

@@ -1,0 +1,25 @@
+---
+title: "R Markdown and Notebook Links"
+author: "Lynd Bacon, lynd.bacon@hsc.utah.edu"
+output:
+  pdf_document:
+    toc: no
+  html_notebook:
+    toc: yes
+  html_document:
+    toc: yes
+---
+___
+
+This content is Creative Commons Licensed CC BY 4.0 by Lynd Bacon
+___
+
+### About R markdown and R Notebooks
+
+This is an R Notebook that uses markdown for formatting.  Here are some references for markdown in R and R Notebooks:
+
+* [R Markdown](https://rmarkdown.rstudio.com/lesson-1.html)
+* [R Notebooks](https://blog.rstudio.com/2016/10/05/r-notebooks)
+* [John Gruber's Markdown Project](https://daringfireball.net/projects/markdown/)
+* [Markdown Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
+

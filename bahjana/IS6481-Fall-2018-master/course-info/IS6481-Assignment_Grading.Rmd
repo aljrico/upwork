@@ -1,0 +1,58 @@
+---
+title: "IS 6481 Fall 2018 Assignment Grading Policy"
+author: "Lynd Bacon, lynd.bacon@hsc.utah.edu"
+output:
+  pdf_document:
+    latex_engine: xelatex
+    toc: no
+  html_notebook:
+    toc: true
+    theme: united
+  html_document:
+    toc: true
+    theme: united
+---
+
+Creative Commons CC by 4.0 Lynd Bacon & Associates, Ltd.  
+
+### Assignment Grades Depend on Completeness and Quality
+
+The "bulk" of your course letter grade depends on how well you do on the five major assignments.  Each is graded based on completeness and quality. The points received (out of the total number possible, they range from 100 to 140) are based on the criteria that follow, which are organized in a "letter grade hierarchy."
+
+If a submitted work doesn't meet at least the minimal critiera below, it will receive points equivalent to a letter grade of D+ or lower.
+
+### It's Just Minimal Work
+
+The points earned will be equivalent to a C- to C+ letter grade.
+
+* Each specific part or requirement of the assignment is addressed in some manner.
+* It is generally readable (e.g. font at least 12 point) and does not exceed the maximum number of pages allowed.
+
+### It's Good Enough to be "Average"
+
+Points earned will be equivalent to a B- to B+ letter grade.
+
+In addition to all of the above criteria:
+
+* Every question in the assignment is addressed, and every requirement is met.
+* All included code is syntactically correct.  
+* Included code is documented.  Another person can understand what it's supposed to do based on how it's documented.
+* All modeling methods used are defined and the appropriateness of their application is explained
+* Technically correct explanations and interpretations are provided for all required results
+
+Note that "average" work in a Eccles graduate level course is "pretty good."
+
+### It's Better Than Average
+
+Points equivalent to at least an A- letter grade.
+
+In addition to all of the above criteria:
+
+* All required results are complete and correct.
+* R data objects, methods, and tools are used appropriately and as much as the assignment allows. For example, "vectorized" procedures are used where possible instead of explicit looping.  Data management techniques like Tidyverse methods are used where appropriate.  The work evidences good "R practice," work that could be used as an example for others.
+* All provided code would run correctly if someone copied and pasted it, given the availability of any required data and the appropriate environment. It would work with no errors, and any results to be produced would be correct.
+* Nontrivial business _insights_ (relevant and useful implecations given application contexts) based on analytics results are provided when required.
+
+### Don't Be Late!
+
+Be sure to review the course policy on late work that’s in the syllabus. The penalty for turning in work late can be considerable.

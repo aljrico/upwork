@@ -1,0 +1,637 @@
+---
+title: "Plots"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+
+
+```{r include = FALSE}
+knitr::opts_chunk$set(echo=FALSE, warning = FALSE, message = FALSE)
+```
+
+
+```{r Initialisation}
+# Packages & Functionss ---------------------------------------------------
+
+library(tidyverse)
+library(lubridate)
+library(data.table)
+library(harrypotter)
+library(gameofthrones)
+library(ggridges)
+library(gridExtra)
+library(magrittr)
+
+theme_set(theme_bw())
+
+source("functions.R")
+source("misc.R")
+source("bootstrap_functions.R")
+raw_data <- fread("upc.csv")
+
+# Cleaning Data -----------------------------------------------------------
+
+clean_data <- raw_data %>%
+	complete_cleaning()
+```
+
+
+## UPC
+
+```{r UPC}
+clean_data %>%
+  group_by(protein) %>%
+  summarise(
+    n = n() / nrow(clean_data),
+    upc = sqrt(sqrt(sqrt(mean(UPCR1))))
+  ) %>%
+  na.omit() %>%
+  ggplot(aes(x = protein, y = n, fill = upc)) +
+  geom_col(colour = "black") +
+  scale_x_discrete(limits = c("Normal", "Borderline", "Proteinuria")) +
+  scale_y_continuous(labels = scales::percent) +
+  xlab("") +
+  ylab("") +
+  scale_fill_got(option = "Martell") +
+  theme(legend.position = "none") +
+  ggtitle("Proteinuria Prevalence")
+
+clean_data %>%
+  group_by(protein) %>%
+  summarise(
+    percent = 100 * n() / nrow(clean_data)
+  ) %>%
+  na.omit()
+```
+
+Aquí només ensenyo la proporció dels nivells de proteinuria.
+
+
+```{r UPC2}
+clean_data %>%
+	filter(UPCR1 < 1.5) %>%
+	ggplot(aes(x = UPCR1, y = stat(width*density))) +
+	geom_histogram(binwidth = 0.1,
+								 colour = "black",
+								 fill = got(10, option = "Tully")[[3]]) +
+	geom_vline(
+		xintercept = 0.2,
+		linetype = "dashed",
+		colour = "orange",
+		size = 0.8
+	) +
+	annotate(
+		"rect",
+		ymin = 0,
+		ymax = 0.25,
+		xmin = 0.2,
+		xmax = 0.4,
+		alpha = 0.25,
+		fill = "orange"
+	) +
+	geom_vline(
+		xintercept = 0.4,
+		linetype = "dashed",
+		colour = "red",
+		size = 0.8
+	) +
+	annotate(
+		"rect",
+		ymin = 0,
+		ymax = 0.25,
+		xmin = 0.4,
+		xmax = 1.5,
+		alpha = 0.1,
+		fill = "red"
+	) +
+	annotate(
+		"text",
+		x = 0.7,
+		y = 0.23,
+		label = " Proteinuria",
+		colour = "red",
+		size = 3
+	) +
+	scale_y_continuous(labels = scales::percent) +
+	xlab("UPC") +
+	ylab("") +
+	ggtitle("Frequency Histogram of UPC") 
+```
+
+Aquest segon plot és una visió més detallada de l'anterior. Bàsicament tens la distribució dels nivells de UPCR. He pintat en taronja la zona `borderline` (entre 0.2 i 0.4) i en vermell la que he catalogat de `Proteinuria` (superior a 0.4).
+
+## Weight
+
+```{r UPC vs Weight}
+clean_data %>%
+  group_by(protein) %>%
+  mutate(upc = mean(UPCR1) %>% sqrt() %>% sqrt()) %>%
+  # filter(UPCR1 < 2) %>%
+  ggplot(aes(x = protein, y = Weight_1, fill = upc)) +
+  geom_boxplot() +
+  scale_x_discrete(limits = c("Normal", "Borderline", "Proteinuria")) +
+  ylab("Weight (Kg)") +
+  xlab("") +
+  scale_fill_got(option = "Martell") +
+  theme(legend.position = "none") +
+  ggtitle("Weight vs Proteinuria")
+
+clean_data %>% 
+	group_by(protein) %>% 
+	summarise(weight_mean = mean(Weight_1, na.rm = TRUE),
+						weight_sd = sd(Weight_1, na.rm = TRUE)) %>% 
+	na.omit()
+```
+
+Boxplot on es veu la mitja i la dispersió de les mesures de pes pels diferents nivells de proteinuria. Es veu que la proteinuria es relaciona amb menor pes.
+
+```{r}
+pvalue <- bootstrap_test( x = clean_data[clean_data$protein == "Normal", ]      %>% .$Weight_1,
+								y = clean_data[clean_data$protein == "Proteinuria", ] %>% .$Weight_1)
+
+communicate_result(pvalue)$msg1
+communicate_result(pvalue)$msg2
+```
+
+
+
+## Age
+
+```{r}
+clean_data %>%
+	ggplot(aes(x = protein, y = Age_at_diagnosis_CKD, fill = protein)) +
+	geom_boxplot() +
+	scale_x_discrete(limits = c("Normal", "Borderline", "Proteinuria")) +
+	ylab("Age (Years)") +
+	xlab("") +
+	scale_fill_got(discrete = TRUE, option = "Martell") +
+	theme(legend.position = "none") +
+	ggtitle("Age vs Proteinuria")
+
+clean_data %>% 
+	group_by(protein) %>% 
+	summarise(age_mean = mean(Age_at_diagnosis_CKD, na.rm = TRUE),
+						age_sd = sd(Age_at_diagnosis_CKD, na.rm = TRUE)) %>% 
+	na.omit()
+```
+
+Aquí no cal ni un test. És evident q la proteinuria no enten d'edats. Però el fem igual
+
+```{r}
+pvalue <- bootstrap_test( x = clean_data[clean_data$protein == "Normal", ]      %>% .$Age_at_diagnosis_CKD,
+								y = clean_data[clean_data$protein == "Proteinuria", ] %>% .$Age_at_diagnosis_CKD)
+
+communicate_result(pvalue)$msg1
+communicate_result(pvalue)$msg2
+```
+
+## Sex
+
+```{r}
+clean_data %>%
+	filter(Sex != "H") %>%
+	ggplot(aes(x = Sex, y = UPCR1, fill = Sex)) +
+	geom_boxplot() +
+	ylab("UPC") +
+	xlab("Sex") +
+	theme(legend.position = "none") +
+	ggtitle("UPC vs Sex") +
+	scale_y_continuous(limits = c(0,2))
+
+clean_data %>% 
+	group_by(Sex) %>% 
+	summarise(upc_mean = mean(UPCR1, na.rm = TRUE),
+						upc_sd = sd(UPCR1, na.rm = TRUE)) %>% 
+	na.omit()
+
+pvalue <- bootstrap_test( x = clean_data[clean_data$Sex == "M", ]      %>% .$UPCR1,
+								y = clean_data[clean_data$Sex == "F", ] %>% .$UPCR1)
+
+communicate_result(pvalue)
+```
+
+
+## CKD
+
+```{r}
+clean_data %>%
+  filter(UPCR1 < 2) %>%
+  filter(CKD %in% c("N", "Y")) %>%
+  ggplot(aes(x = CKD, y = UPCR1, fill = CKD)) +
+  geom_boxplot(alpha = 0.75) +
+  scale_fill_got(discrete = TRUE, option = "Tully") +
+  theme(legend.position = "none") +
+  xlab("CKD") +
+  ylab("UPC") +
+	ggtitle("Observed UPC on Patients with diagnosed CKD (or not)")
+
+clean_data %>% 
+	group_by(CKD) %>% 
+	summarise(upc_mean = mean(UPCR1, na.rm = TRUE),
+						upc_sd = sd(UPCR1, na.rm = TRUE)) %>% 
+	na.omit()
+```
+
+Aquí només mirem mitja i dispersió dels nivells de UPC mesurats, separant en pacients diagnosticats amb CKD i els que no. El que podem dir és que els pacients amb CKD diagnosticada tenen una UPC considerablement més alta (imagino que això seria prou obvi).
+
+```{r}
+pvalue <- bootstrap_test( x = clean_data[clean_data$CKD == "Y", ]      %>% .$UPCR1,
+								y = clean_data[clean_data$CKD == "N", ] %>% .$UPCR1)
+
+communicate_result(pvalue)$msg1
+communicate_result(pvalue)$msg2
+```
+
+
+
+```{r}
+prop_ckd <- generate_ratio_ckd(clean_data) %>% .$prop_ckd
+upc_expanded <- generate_ratio_ckd(clean_data) %>% .$upc_expanded
+
+tibble(
+  prop_ckd = prop_ckd,
+  upc_expanded = upc_expanded
+) %>%
+  filter(upc_expanded < 1) %>%
+  ggplot(aes(x = upc_expanded, y = prop_ckd)) +
+  geom_path(colour = hp(10, house = "Ravenclaw")[[1]], size = 1) +
+  geom_vline(
+    xintercept = 0.4,
+    colour = got(10, option = "Martell")[[10]],
+    linetype = "dashed"
+  ) +
+  xlab("Proeinuria (UPCR)") +
+  ylab("") +
+  ggtitle("Prevalence of CKD depending on measured UPC") +
+  scale_y_continuous(labels = scales::percent)
+```
+
+Més en detall he intentat explorar com es relaciona el nivell de UPC amb la diagnosi de CKD. El gràfic que veus ensenya el % de casos diagnosticats amb CKD en funció del UPC que presentaven. Crec que es prou rellevant que a partir de UPC superior a 0.5 es dispara cap al 100%. El que vol dir que amb proteinuria `Proteinuria` pràcticament tothom té CKD.
+
+```{r}
+clean_data %>%
+	select(Age_at_diagnosis_CKD) %>%
+	mutate(Age_at_diagnosis_CKD = Age_at_diagnosis_CKD %>% as.numeric()) %>%
+	na.omit() %>%
+	ggplot(aes(x = Age_at_diagnosis_CKD, y = stat(width*density))) +
+	geom_histogram(binwidth = 1.05,
+								 fill = hp(10, house = "Hufflepuff")[[9]],
+								 colour = "black") +
+	scale_y_continuous(labels = scales::percent) +
+	xlab("Age") +
+	ylab("") +
+	ggtitle("Age at CKD diagnosis")
+```
+
+Encara imagino que això es pot estudiar més. Potser amb més dades. De moment lo que puc dir és que l'edat de diagnosi de CKD és més habitual entre els 7 i 11 anys. Però la diferencia tampoc és gaire rellevant
+
+## Creatinina, Urea & UPC
+
+```{r}
+clean_data %>%
+  group_by(protein) %>%
+  mutate(upc = mean(UPCR1) %>% sqrt() %>% sqrt()) %>%
+  # filter(UPCR1 < 2) %>%
+  ggplot(aes(x = protein, y = Crea_BQ1, fill = upc)) +
+  geom_boxplot() +
+  scale_x_discrete(limits = c("Normal", "Borderline", "Proteinuria")) +
+  ylab("Creatinine") +
+  xlab("") +
+  scale_fill_got(option = "Martell") +
+  theme(legend.position = "none") +
+  ggtitle("Creatinine vs Proteinuria")
+
+clean_data %>% 
+	group_by(protein) %>% 
+	summarise(crea_mean = mean(Crea_BQ1, na.rm = TRUE),
+						crea_sd = sd(Crea_BQ1, na.rm = TRUE)) %>% 
+	na.omit()
+```
+
+Un altre boxplot. Veiem mitja i dispersió. Sembla prou evident que amb proteinuria `Proteinuria` s'observa una *Creatinina* més alta.
+
+```{r}
+pvalue <- bootstrap_test( x = clean_data[clean_data$protein == "Normal", ]      %>% .$Crea_BQ1,
+								y = clean_data[clean_data$protein == "Proteinuria", ] %>% .$Crea_BQ1)
+
+communicate_result(pvalue)$msg1
+communicate_result(pvalue)$msg2
+
+
+```
+
+
+```{r}
+clean_data %>%
+  group_by(protein) %>%
+  mutate(upc = mean(UPCR1) %>% sqrt() %>% sqrt()) %>%
+  # filter(UPCR1 < 2) %>%
+  ggplot(aes(x = protein, y = Urea1, fill = upc)) +
+  geom_boxplot() +
+  scale_x_discrete(limits = c("Normal", "Borderline", "Proteinuria")) +
+  ylab("Urea") +
+  xlab("") +
+  scale_fill_got(option = "Martell") +
+  theme(legend.position = "none") +
+  ggtitle("Urea vs Proteinuria")
+
+clean_data %>% 
+	group_by(protein) %>% 
+	summarise(urea_mean = mean(Urea1, na.rm = TRUE),
+						urea_sd = sd(Urea1, na.rm = TRUE)) %>% 
+	na.omit()
+```
+
+En el cas de la *Urea* observem més o menys el mateix, però en aquest cas l'impacte és molt més alt.
+
+```{r}
+pvalue <- bootstrap_test( x = clean_data[clean_data$protein == "Normal", ]      %>% .$Urea1,
+								y = clean_data[clean_data$protein == "Proteinuria", ] %>% .$Urea1)
+
+communicate_result(pvalue)$msg1
+communicate_result(pvalue)$msg2
+
+```
+
+
+## Clinical Signs
+
+```{r}
+
+fn <- function(x) {
+  return(x / sum(x))
+}
+
+clean_data %>%
+  filter(!is.na(protein)) %>%
+  group_by(protein) %>%
+  select(!!c(main_categories)) %>%
+  summarise_all(sum) %>%
+  mutate_if(is.numeric, fn) %>%
+  ungroup() %>%
+  melt(id.vars = c("protein")) %>%
+  group_by(variable, protein) %>%
+  arrange(-value) %>%
+  ungroup() %>%
+  as_tibble() -> tmp
+
+tmp$variable <- factor(tmp$variable, levels = (tmp %>% top_n(tmp$variable %>% unique() %>% length()) %>% .$variable))
+
+tmp %>%
+  ggplot(aes(x = variable, y = value, fill = protein)) +
+  geom_col(
+    colour = "black",
+    position = "dodge"
+  ) +
+  scale_fill_got(option = "Martell", discrete = TRUE, name = "") +
+  scale_y_continuous(labels = scales::percent) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  xlab("Clinical Sign") +
+  ylab("") +
+  ggtitle("Prevalence of Proteinuria Levels")
+
+tmp
+```
+
+Aquí m'he posat a investigar com podem relacionar els diferents _Clinical Signs_ amb els nivells de proteinuria. Per tal que les dades tinguessin algun sentit. He reduit i agrupat moltes de les descripcions que es donàven en supergrups. Per exemple, he agrupat totes les descripcions com "accute vomiting" o "chronic vomiting" en la super-categoria "vomiting". Sé que els detalls que es perden podrien dir coses interesants, però sense agrupar les descripcions tenim 100 _Clinical Signs_ diferents per 100 pacients. Et passaré la llista de totes les agrupacions fetes, si hi ha alguna que voleu canviar, no em costa res ja. De moment ho he agrupat una mica com m'ha semblat.
+
+FYI: El símptoma que he etiquetat com `behaviour` agrupa tot allò on a la descripció deia que l'animal es comportava estrany (lethargic, excited, weird behaviour, etc.)
+
+```{r}
+
+clean_data %>%
+	# filter(UPCR1 < 2) %>%
+  select(!!c(main_categories, c("UPCR1"))) %>%
+  rename(CONTROL = none) %>%
+  melt(id.vars = "UPCR1") %>%
+	mutate(control = (variable == "CONTROL")) %>%
+  filter(value) %>%
+  select(-value) %>%
+  na.omit() %>%
+  group_by(variable) %>%
+  mutate(m = mean(UPCR1)) %>%
+  ungroup(m) %>%
+  arrange(-UPCR1) %>%
+  ggplot(
+    aes(
+      x = reorder(variable, -m),
+      y = UPCR1
+    )
+  ) +
+  geom_boxplot(
+  	alpha = 0.8,
+  	aes(fill = control)
+  	) +
+	geom_hline(
+		yintercept = 0.4,
+		linetype = "dashed",
+		colour = "red",
+		size = 0.8
+		) +
+	annotate(
+		"rect",
+		ymin = 0.4,
+		ymax = 2,
+		xmin = 0,
+		xmax = 10,
+		alpha = 0.1,
+		fill = "red"
+		) +
+	annotate(
+		"text",
+		x = 9.25,
+		y = 1,
+		label = " Proteinuria",
+		colour = "red",
+		size = 5
+	) +
+		geom_hline(
+		yintercept = 0.2,
+		linetype = "dashed",
+		colour = "orange",
+		size = 0.8
+	) +
+	annotate(
+		"rect",
+		xmin = 0,
+		xmax = 10,
+		ymin = 0.2,
+		ymax = 0.4,
+		alpha = 0.25,
+		fill = "orange"
+	) +
+  xlab("Clinical Signs") +
+  ylab("UPCR") +
+	scale_y_continuous(limits = c(0,2)) +
+  ggtitle("Measured UPC based on presented Clinical Signs") +
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 90, hjust = 1)
+  ) +
+	coord_flip() +
+	scale_fill_hp(discrete = TRUE,
+								house = "Ravenclaw",
+								begin = 0.25,
+								end = 0.65)
+
+clean_data %>%
+	# filter(UPCR1 < 2) %>%
+  select(!!c(main_categories, c("UPCR1"))) %>%
+  melt(id.vars = "UPCR1") %>%
+  filter(value) %>%
+  select(-value) %>%
+  na.omit() %>%
+  group_by(variable) %>%
+  summarise(upc_mean = mean(UPCR1),
+  					upc_sd = sd(UPCR1))
+```
+
+Semblant al gràfic anterior, però més detallat. Intento veure com els *Clinical Signs* que es presenten poden servir per "predir" el nivell de UPC que l'animal presentaria. He fet servir l'absència de cap símptoma (controls rutinaris o coses així) com a grup `control`. Digueu-me si això té sentit. Ho he posat per tenir una referènecia.
+
+Aquests resultats els trobo interessants, per què cap pacient sense símptomes ha presentat nivells d'UPC que es classifiquen com proteinuria `Proteinuria`, tret d'uns pocs outliers.
+
+```{r}
+clean_data %>%
+	select(!!c(main_categories, c("UPCR1"))) %>%
+	rename(CONTROL = none) %>%
+	melt(id.vars = "UPCR1") %>%
+	mutate(control = (variable == "CONTROL")) ->
+	clinical_signs
+
+bootstrap_test(x = clinical_signs[clinical_signs$variable != "CONTROL" & clinical_signs$value == TRUE,] %>% .$UPCR1,
+							 y = clinical_signs[clinical_signs$variable == "CONTROL"  & clinical_signs$value == TRUE,] %>%  .$UPCR1)
+
+variables <- clinical_signs$variable %>% unique() %>% as.vector()
+pvalues <- c()
+for(i in seq_along(variables)){
+	pvalues[[i]] <- bootstrap_test(x = clinical_signs[clinical_signs$variable == variables[[i]] & clinical_signs$value == TRUE,] %>% .$UPCR1,
+																 y = clinical_signs[clinical_signs$variable == "CONTROL"  & clinical_signs$value == TRUE,] %>%  .$UPCR1)
+}
+
+col_scales <- c(hp(10)[[8]], hp(10, house = "Ravenclaw")[[1]])
+tibble(variables, pvalue = pvalues) %>%
+	filter(variables != "CONTROL") %>%
+	mutate(colour = ifelse(pvalue < 0.05, hp(10)[[8]], hp(10, house = "Ravenclaw")[[1]])) %>%
+	ggplot(aes(x = reorder(variables,pvalue), y = pvalue, fill = colour)) +
+	geom_col(colour = "black") +
+	geom_hline(yintercept = 0.05, linetype = "dashed", size = 0.85) +
+	annotate(
+		"rect",
+		ymin = 0.05,
+		ymax = 1,
+		xmin = 0,
+		xmax = length(pvalues) - 0.5,
+		alpha = 0.25,
+		fill = hp(10)[[8]]
+	) +
+	xlab("") +
+	ylab("P-value") +
+	scale_fill_manual(values = col_scales, aesthetics = "fill") +
+	ggtitle("Results from Testing the difference between \n Clinical Signs and the Control Group") +
+	theme(legend.position = "none") +
+	theme(axis.text.x = element_text(angle = 30, hjust = 1))
+
+
+```
+
+Cap test ha sigut significatiu. Tenim masses categories (tot i que les he reduit molt) pel vòlum de dades tan petit que tenim. Si fem el test diferenciant si té símptomes vs no en tenen cap, sí que tenim evidència significativa. Implica això que qualsevol símptoma ja és indicador de possible proteinuria? Jo abans diria que el resultat del test ens diu que no tenim prou dades com per disseminar entre més de dues categories.
+
+
+
+```{r}
+clean_data %>%
+	group_by(protein, none) %>%
+	summarise(n = n()) %>%
+	group_by(protein) %>%
+	mutate(n = round(n/sum(n), 2)) %>%
+	na.omit() %>%
+	ggplot(aes(x = protein, y = n, fill = none)) +
+	geom_col(position = "fill", colour = "black") +
+	scale_y_continuous(labels = scales::percent) +
+	# geom_text(aes(label=n), position=position_dodge(width=0.9), vjust=-0.25, colour = got(10, option = "Daenerys")[[1]]) +
+	xlab("") +
+	ylab("") +
+	scale_fill_got(discrete = TRUE, option = "Daenerys", name = "Presented any Sign?", labels = c("Yes", "No"), direction = - 1)
+
+clean_data %>%
+	group_by(protein, none) %>%
+	summarise(n = n()) %>%
+	group_by(protein) %>%
+	mutate(n = round(n/sum(n), 2)) %>% 
+	ungroup() %>% 
+	filter(!none) %>% 
+	select(-none) %>% 
+	na.omit()
+
+```
+
+Aquest altre plot el que reflexa és tal qual quin percentatge de proeinurics presentàven cap signe clínic. A diferencia de normals i borderlines, la majoria dels proteinúrics presentàven almenys algun signe clínic, el q fos.
+
+# Mortality
+
+Ara em centraŕe en analitzar quines de les variables que tenim poden tenir cert poder predictiu per la mortalitat.
+
+
+```{r}
+variables <- c("UPCR1", "PCV1", "Urea1", "K1", "Crea_BQ1", "Phos1", "Weight_1", "Alb_1", "TP1", "USG1", "Age_at_diagnosis_CKD", "BP1")
+
+clean_data %>%
+	select(noquote(c("death", variables))) %>%
+	melt(id.vars = "death") %>%
+	ggplot(aes(x = death, y = value, colour = death)) +
+	geom_boxplot(size = 0.8) +
+	# geom_jitter() +
+	xlab("") +
+	ylab("") +
+	scale_x_discrete(labels = c("Survived", "Died")) +
+	theme(legend.position = "none") +
+	facet_wrap(.~variable, scales = "free") +
+	scale_colour_got_d(option = "Tully")
+
+clean_data %>%
+	select(noquote(c("death", variables))) %>%
+	melt(id.vars = "death") %>% 
+	group_by(death,variable) %>% 
+	summarise(value_mean = mean(value, na.rm = TRUE),
+						value_sd = sd(value, na.rm = TRUE))
+
+```
+
+Aquí podem veure els boxplots de totes les variables que podem considerar per intentar predir la mortalitat dels pacients. Només mirant els gràfics ja podem predir que son rellevants la PCV, la Urea, la BP i el Potassi. De la resta o no és evident sí son rellevants o no, o és evident que no ho son.
+
+Per no haver-ho de fer a ull, podem fer un test estadístic a totes les comparacions.
+
+```{r}
+pvalues <- c()
+for(i in seq_along(variables)){
+	pvalues[[i]] <- bootstrap_test( x = clean_data[clean_data$death, ][[variables[[i]]]],
+									y = clean_data[!clean_data$death, ][[variables[[i]]]])
+}
+
+col_scales <- c(hp(10)[[8]], hp(10, house = "Ravenclaw")[[1]])
+tibble(variables, pvalue = pvalues) %>%
+	mutate(colour = ifelse(pvalue < 0.05, hp(10)[[8]], hp(10, house = "Ravenclaw")[[1]])) %>%
+	ggplot(aes(x = reorder(variables,pvalue), y = pvalue, fill = colour)) +
+	geom_col(colour = "black") +
+	geom_hline(yintercept = 0.05, linetype = "dashed", size = 0.85) +
+	annotate(
+		"rect",
+		ymin = 0.05,
+		ymax = 0.7,
+		xmin = 0,
+		xmax = length(pvalues) + 0.5,
+		alpha = 0.25,
+		fill = hp(10)[[8]]
+	) +
+	xlab("") +
+	ylab("P-value") +
+	scale_fill_manual(values = col_scales, aesthetics = "fill") +
+	ggtitle("Results from Hypothesis") +
+	theme(legend.position = "none") +
+	theme(axis.text.x = element_text(angle = 30, hjust = 1))
+```
+
+En aquest gràfic de barres podem veure el resultat del `pvalue` obtingut de tots els tests estadístics. El threshold s'ha situat a $0.05$, que és l'estàndard presentat per Fisher. El que vol dir que totes aquelles variables amb un pvalue per sota d'aquest valor, podem dir que son estadísticament significatives, pel que respecta a la mortalitat.

@@ -1,0 +1,73 @@
+---
+title: "IS6481-Fall2018-Assignment-3: Cluster Stat Comparisons"
+author: "Lynd Bacon, lynd.bacon@hsc.utah.edu"
+output:
+  html_notebook:
+    toc: yes
+  pdf_document:
+    toc: no
+  html_document:
+    toc: yes
+---
+Creative Commons CC by 4.0 Lynd Bacon & Associates, Ltd.
+
+### Get the Example Data
+
+The data are in the files `Q24rm.rds` and `km3.rds`.  The latter is a three cluster kmeans solution obtained by clustering the Q24 items in `Q24rm.rds`.
+
+You may need to set your working directory. The following is commented out.
+
+```{r setup}
+#knitr::opts_knit$set(root.dir = '/media/sdb2/UT2018/IS6481/work/IS6481-Fall-2018/assignments/assignment-3')
+```
+
+```{r}
+getwd()
+Q24nm=readRDS('Q24nm.rds')
+km3=readRDS('km3.rds')
+```
+
+Here's what's in these two objects:
+
+```{r}
+names(Q24nm)
+names(km3)
+```
+
+### Comparing Cluster Means
+
+Let's compare the means of the three clusters on the first Q24 item, `Q24r1`.  We'll use the R function `oneway.test`.  See help(oneway.test) in R.
+
+First we'll add the kmeans cluster assignments to the `Q24nm` data.frame to Make Life Easier:
+
+```{r}
+Q24nm['cluster']=km3$cluster
+```
+The above will "work" (not generate an error) if nrow(Q24nm)=length(km3$cluster)
+
+```{r}
+oneway.test(q24r1~cluster,data=Q24nm)
+```
+Another way to do this would be:
+
+```{r}
+anova(lm(q24r1~as.factor(cluster),data=Q24nm))
+```
+
+### Comparing Category Response Frequencies Across Clusters
+
+The data on discrete variables can't usually be averaged. To compare clusters on a discrete variable, we can "cross-tabulate" cluster membership by the discrete variable.  For example:
+
+```{r}
+xtabs(~cluster+q12,data=Q24nm)
+```
+
+These counts don't tell us whether the clusters are different across the q12 response categories.  We can do a test to see if they differ:
+
+```{r}
+chisq.test(xtabs(~cluster+q12,data=Q24nm))
+```
+This is a test of whether the columns are "independent" of the rows, or vice versa.
+
+
+

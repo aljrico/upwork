@@ -1,0 +1,124 @@
+---
+title: "Assignment 2 Regression Modeling Helper Part 2 v1"
+author: "Lynd Bacon, lynd.bacon@hsc.utah.edu"
+output:
+  html_notebook:
+    toc: yes
+  pdf_document:
+    toc: no
+  html_document:
+    toc: yes
+---
+
+### Where We Were
+
+In part 1 of this assignment helper we fit a binary logistic regression model to predict whether a respondent uses only free apps.
+
+### Where We Are Going
+
+Assignment 2 part (3) asks you to fit a binary _logistic_ regression, and a binary _probit_ regression.  You need to do this using a randomly selected 80% of the data.  After you have estimated these models, you are to use them to predict the responses in the 20% of the data that you didn't use for estimation. Here we're going to step through the parts of doing (3) by estimating a binary logistic regression model.  The probit model is different in terms of its "link"function.
+
+### Let's get the data
+
+As before, but switching to the directory were the data are as needed.  Change this if you need to.
+
+```{r}
+ # setwd(paste(getwd(),'/assignments/assignment-2',sep=""))
+getwd()
+```
+Now get the data:
+
+```{r}
+appHappyData=load('appHappyData-2018.RData')
+```
+Let's rename our data.frame and select into the variables we used before:
+```{r}
+appHappyNum=apphappy.4.num.frame[,c('q12','q48','q49','q50r1')]
+```
+### Creating the Binary Dependent Variable We Want
+
+Like before:
+
+```{r}
+appHappyNum['onlyFreeApps']=as.numeric(appHappyNum$q12>=6)
+table(appHappyNum$q12, appHappyNum$onlyFreeApps)
+```
+
+### Randomly Subsetting the Data
+
+Here's where we do the 80/20 random split of the data. First, in case we want to be able to reproduce this split at a later time, we can set how a sequence of randomly generated numbers is produced by setting the _seed_ of R's random number generator.  Here's how to do it:
+
+```{r}
+set.seed(123)
+```
+The digits 123 can be any other digits.  If the digits are used again to initialize R's random number generator, the same sequence of random numbers will be produced given the same 
+
+Now let's split the appHappyNum data.frame.  Here's one way to do it:
+
+```{r}
+appHappyNum['estSamp']=runif(nrow(appHappyNum),0,1)<=0.80
+```
+See `help(runif)` to learn more about generating random numbers from a uniform distribution.
+
+Now there should be a column in appHappyNum named _estSamp_ with 80% of the values being TRUE, and the rest FALSE.  Let's take a look:
+
+```{r}
+table(appHappyNum$estSamp)/nrow(appHappyNum)
+```
+Not exactly of course.  This is from a random process.
+
+### Estimating a Binary Logit
+
+Let's estimate the same model as in part 1:
+
+```{r}
+logModel1=glm(onlyFreeApps~q48+q49,
+              data=appHappyNum[appHappyNum$estSamp==TRUE,],  #subsetting
+              family=binomial(link=logit))
+summary(logModel1)
+```
+Note how we selected, or subsetted, the data in the data.frame using: 
+
+`data=appHappyNum[appHappyNum$estSamp==TRUE,]`
+
+### Predicting Responses Using The Held Out, or "Test," Data
+
+Assignment 2 asks you to calculate your models' accuracy in predicting the data you didn't use to estimate them.  These data are the data in the `appHappyNum` data.frame that have FALSE as their value on the variable `estSamp` that we created using the `runif()` function.
+
+It turns out that glm's and other kinds of models in R have built-in prediction methods.  You can provide one of these prediction methods wiath an existing model, e.g. like `logModel1` above, and some new data, and it will produce different kinds of predicted responses.  For the `predict()` method for a glm, see `help(predict.glm)`.
+
+Let's get predicted responses for our held out, "test" data using `logModel1`.
+
+```{r}
+predModel1=predict(logModel1,
+                   newdata=appHappyNum[appHappyNum$estSamp==FALSE,],
+                   type="response")
+```
+`type="response"` means that we want predicted _probabilities_ of responses.  Here's what's in `predModel1`:
+
+```{r}
+summary(predModel1)
+length(predModel1)
+```
+So here we see predicted response probabilities in the range [0.125,0.216].
+
+### Calculating Predictive Accuracy
+
+Assessin predictive accuracy requires that we somehow compare actual responses and predicted responses.  There are (of course) different ways of doing this.  One way is to convert our predicted responsibilities to 1's and 0's, and then we can calculate the proportion or percent of the time they are the same as the observed 1's and 0's:
+
+```{r}
+preds=as.numeric(predModel1>=0.5)
+table(preds)
+actuals=appHappyNum[appHappyNum$estSamp==FALSE,c('onlyFreeApps')]
+table(actuals)
+100*sum(preds==actuals,na.rm=TRUE)/length(preds)  # na.rm as NA's may happen
+
+```
+Looks like there may be a couple of missing values in the actual `onlyFreeApps` values.  Hence the above use of the na.rm=TRUE option in the `sum()` function.  We'd want to look into these cases to see what's up with them.  
+
+### Can You Do Better?
+
+In any case, look at how well this model does (77.5 %) by predicting only "no" responses! Why do you think that is?
+
+See if you can do better with your logistic and probit models.
+
